@@ -8,7 +8,7 @@ class Funcionario():
         self.admin = admin
         self.nascimento = nascimento
         self.telefone = telefone
-    
+
     def atualizarDados(self):
         pass
 

@@ -6,6 +6,6 @@ class Produto():
         self.valorVenda = valorVenda
         self.qtdDisponivel = qtdDisponivel
         self.disponivel = disponivel
-    
+
     def atualizar_valor(self, valorCompra, taxaLucro, moeda):
         pass
