@@ -17,6 +17,7 @@ class BancoAdministradores():
                      email text,
                      senha text,
                      telefone text,
-                     emailNotificacoes text""")
+                     emailNotificacoes text,
+                     admin text""")
         self.conexao.commit()
         c.close()
