@@ -52,13 +52,41 @@ class Cliente():
             c = banco.conexao.cursor()
             c.execute("delete from usuarios where idCliente = " +
                       str(self.idCliente) + " ")
-            
+
             banco.conexao.commit()
             c.close()
-            
+
             return "Cliente excluído com sucesso"
         except:
             return "Ocorreu um erro na exclusão do cliente"
 
-    def login(self):  # usar com email e senha
-        pass
+    def login(self, idCliente):  # usar com email e senha
+        banco = Banco()
+        try:
+            c = banco.conexao.cursor()
+            c.execute("select * from usuarios where idCliente = " +
+                      str(idCliente) + " ")
+
+            for linha in c:
+                print(linha)
+                print("Dentro do for")
+                self.idCliente = linha[0]
+                self.nome = linha[1]
+                self.cpf = linha[2]
+                self.nascimento = linha[3] 
+                self.email = linha[4]
+                self.senha = linha[5]
+                self.telefone = linha[6]
+                self.logradouro = linha[7]
+                self.bairro = linha[8]
+                self.cidade = linha[9]
+                self.cep = linha[10]
+                self.estado = linha[11]
+                self.complemento = linha[12]
+                self.numero = linha[13]
+
+            c.close()
+
+            return "Busca feita com sucesso"
+        except:
+            return "Ocorreu um erro na busca do usuário"
