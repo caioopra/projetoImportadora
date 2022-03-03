@@ -10,7 +10,7 @@ class Banco():
         c = self.conexao.cursor()
 
         c.execute("""create table if not exists usuarios (
-                     idUsuario integer primary key autoincrement,
+                     idCliente integer primary key autoincrement,
                      nome text,
                      cpf text,
                      nascimento text,
