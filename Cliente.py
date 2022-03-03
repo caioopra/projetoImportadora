@@ -33,11 +33,11 @@ class Cliente():
 
     def atualizarCliente(self):
         banco = Banco()
-        try: 
+        try:
             c = banco.conexao.cursor()
 
             c.execute("update usuarios set nome = '" + self.nome + "', cpf = '" +
-                        self.cpf + "', nascimento = '" + self.nascimento + "', email = '" + self.email + "', senha = '" + self.senha + "', telefone = '" + self.telefone + "', logradouro = '" + self.endereco.logradouro + "', bairro = '" + self.endereco.bairro + "', cidade = '" + self.endereco.cidade + "', cep = '" + self.endereco.cep + "', estado = '" + self.endereco.estado + "', complemento = '" + self.endereco.complemento + "', numero = '" + self.endereco.numero + "' where idCliente = " + str(self.idCliente) +" ")
+                      self.cpf + "', nascimento = '" + self.nascimento + "', email = '" + self.email + "', senha = '" + self.senha + "', telefone = '" + self.telefone + "', logradouro = '" + self.endereco.logradouro + "', bairro = '" + self.endereco.bairro + "', cidade = '" + self.endereco.cidade + "', cep = '" + self.endereco.cep + "', estado = '" + self.endereco.estado + "', complemento = '" + self.endereco.complemento + "', numero = '" + self.endereco.numero + "' where idCliente = " + str(self.idCliente) + " ")
 
             banco.conexao.commit()
             c.close()
@@ -46,9 +46,19 @@ class Cliente():
         except:
             return "Erro ao atualizar cliente"
 
-
     def deletarCliente(self):
-        pass
+        banco = Banco()
+        try:
+            c = banco.conexao.cursor()
+            c.execute("delete from usuarios where idCliente = " +
+                      str(self.idCliente) + " ")
+            
+            banco.conexao.commit()
+            c.close()
+            
+            return "Cliente excluído com sucesso"
+        except:
+            return "Ocorreu um erro na exclusão do cliente"
 
     def login(self):  # usar com email e senha
         pass

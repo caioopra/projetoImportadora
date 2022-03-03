@@ -4,14 +4,17 @@ from Cliente import Cliente
 from Endereco import Endereco
 
 
-# cliente = Cliente("Caio", "123123123", "18-06-2003", "caioprsilva@gmail.com", "caiopra", "48999154099",
-#                   "Rua do Caçador", "Caçador", "Capivari de Baixo", "88745000", "SC", "casa", "1030")
+cliente = Cliente("Caio", "123123123", "18-06-2003", "caioprsilva@gmail.com", "caiopra", "48999154099",
+                  "Rua do Caçador", "Caçador", "Capivari de Baixo", "88745000", "SC", "casa", "1030", 1)
 
 # print(cliente.cadastrarCliente())
 
 # cliente = Cliente("Caio Pra", "456456456", "18-06-2003", "caioprsilva@gmail.com", "caiopra", "48999154099",
 #                   "Rua do Caçador", "Caçador", "Capivari de Baixo", "88745000", "SC", "casa", "1030", "8")
 # print(cliente.atualizarCliente()) 
+
+print(cliente.deletarCliente())
+
 
 class Application():
     def __init__(self, master=None):
