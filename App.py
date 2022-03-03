@@ -11,7 +11,7 @@ cliente = Cliente("Caio", "123123123", "18-06-2003", "caioprsilva@gmail.com", "c
 
 # cliente = Cliente("Caio Pra", "456456456", "18-06-2003", "caioprsilva@gmail.com", "caiopra", "48999154099",
 #                   "Rua do Caçador", "Caçador", "Capivari de Baixo", "88745000", "SC", "casa", "1030", "8")
-# print(cliente.atualizarCliente()) 
+# print(cliente.atualizarCliente())
 
 print(cliente.login(3, "caioprsilva@gmail.com", "caio"))
 
@@ -69,6 +69,47 @@ class Application():
         self.titulo = Label(self.container1, text="Entrar/cadastrar conta: ")
         self.titulo["font"] = ("Century Gothic", "12", "bold")
         self.titulo.pack()
+
+        # IdCliente + input
+        self.lblIdCliente = Label(
+            self.container2, text="idCliente", font=self.fonte, width=10)
+        self.lblIdCliente.pack(side=LEFT)
+
+        self.txtIdCliente = Entry(self.container2)
+        self.txtIdCliente["width"] = 12
+        self.txtIdCliente["font"] = self.fonte
+        self.txtIdCliente.pack(side=LEFT)
+
+        # botao de buscar ao lado do IdCliente
+        self.btnBuscar = Button(
+            self.container2, text="Buscar", font=self.fonte, width=10)
+        self.btnBuscar["command"] = self.buscarUsuario
+        self.btnBuscar.pack(side=RIGHT)
+
+        # nome do usuario + input
+        self.lblNome = Label(self.container3, text="Nome: ",
+                             font=self.fonte, width=10)
+        self.lblNome.pack(side=LEFT)
+
+        self.txtNome = Entry(self.container3)
+        self.txtNome["width"] = 25
+        self.txtNome["font"] = self.fonte
+        self.txtNome.pack(side=LEFT)
+
+        # CPF + input
+        self.lblCpf = Label(
+            self.container4, text="CPF: ", font=self.fonte, width=10)
+        self.lblCpf.pack(side=LEFT)
+
+        self.txtCpf = Entry(self.container4)
+        self.txtCpf["width"] = 25
+        self.txtCpf["font"] = self.fonte
+        self.txtCpf.pack(side=LEFT)
+
+        # email + input
+
+    def buscarUsuario(self):  # TODO: implementar botão
+        print("Clique do botão")
 
 
 root = Tk()
