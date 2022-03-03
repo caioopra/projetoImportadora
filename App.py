@@ -65,12 +65,12 @@ class Application():
         self.container9.pack()
 
         # TODO: remodelar textos
-        # Pagina inicial
+        # Titulo
         self.titulo = Label(self.container1, text="Entrar/cadastrar conta: ")
         self.titulo["font"] = ("Century Gothic", "12", "bold")
         self.titulo.pack()
 
-        # IdCliente + input
+        # input IdCliente
         self.lblIdCliente = Label(
             self.container2, text="idCliente", font=self.fonte, width=10)
         self.lblIdCliente.pack(side=LEFT)
@@ -86,7 +86,7 @@ class Application():
         self.btnBuscar["command"] = self.buscarUsuario
         self.btnBuscar.pack(side=RIGHT)
 
-        # nome do usuario + input
+        # input nome do usuario
         self.lblNome = Label(self.container3, text="Nome: ",
                              font=self.fonte, width=10)
         self.lblNome.pack(side=LEFT)
@@ -96,7 +96,7 @@ class Application():
         self.txtNome["font"] = self.fonte
         self.txtNome.pack(side=LEFT)
 
-        # CPF + input
+        # input CPF
         self.lblCpf = Label(
             self.container4, text="CPF: ", font=self.fonte, width=10)
         self.lblCpf.pack(side=LEFT)
@@ -106,7 +106,47 @@ class Application():
         self.txtCpf["font"] = self.fonte
         self.txtCpf.pack(side=LEFT)
 
-        # email + input
+        # input nascimento
+        # TODO: adicionar placeholder aos campos
+        self.lblNascimento = Label(
+            self.container5, text="Data de \nNascimento: ", font=self.fonte, width=10)
+        self.lblNascimento.pack(side=LEFT)
+
+        self.txtDia = Entry(self.container5)
+        self.txtDia["width"] = 5
+        self.txtDia["font"] = self.fonte
+        self.txtDia.pack(side=LEFT, padx=5)
+
+        self.txtMes = Entry(self.container5)
+        self.txtMes["width"] = 5
+        self.txtMes["font"] = self.fonte
+        self.txtMes.pack(side=LEFT, padx=5)
+
+        self.txtAno = Entry(self.container5)
+        self.txtAno["width"] = 6
+        self.txtAno["font"] = self.fonte
+        self.txtAno.pack(side=LEFT, padx=5)
+
+        # input email
+        self.lblEmail = Label(
+            self.container6, text="Email: ", font=self.fonte, width=10)
+        self.lblEmail.pack(side=LEFT)
+
+        self.txtEmail = Entry(self.container6)
+        self.txtEmail["width"] = 25
+        self.txtEmail["font"] = self.fonte
+        self.txtEmail.pack(side=LEFT)
+
+        # input senha
+        self.lblSenha = Label(
+        self.container7, text="Senha: ", font=self.fonte, width=10)
+        self.lblSenha.pack(side=LEFT)
+
+        self.txtSenha = Entry(self.container7)
+        self.txtSenha["width"] = 25
+        self.txtSenha["font"] = self.fonte
+        self.txtSenha["show"] = "*"
+        self.txtSenha.pack(side=LEFT)
 
     def buscarUsuario(self):  # TODO: implementar botão
         print("Clique do botão")
