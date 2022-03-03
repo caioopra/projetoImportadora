@@ -60,7 +60,7 @@ class Cliente():
         except:
             return "Ocorreu um erro na exclusão do cliente"
 
-    def login(self, idCliente):  # usar com email e senha
+    def login(self, idCliente, email, senha):  # usar com email e senha
         banco = Banco()
         try:
             c = banco.conexao.cursor()
@@ -86,6 +86,11 @@ class Cliente():
                 self.numero = linha[13]
 
             c.close()
+
+            if not (email == self.email and senha == self.senha):
+                return "Email ou senha inválido, tente novamente"
+            else:
+                print("Login efetuado com sucesso")
 
             return "Busca feita com sucesso"
         except:

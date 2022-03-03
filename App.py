@@ -13,7 +13,7 @@ cliente = Cliente("Caio", "123123123", "18-06-2003", "caioprsilva@gmail.com", "c
 #                   "Rua do Caçador", "Caçador", "Capivari de Baixo", "88745000", "SC", "casa", "1030", "8")
 # print(cliente.atualizarCliente()) 
 
-print(cliente.login(3))
+print(cliente.login(3, "caioprsilva@gmail.com", "caio"))
 
 
 class Application():
