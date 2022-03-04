@@ -68,8 +68,6 @@ class Cliente():
                       str(idCliente) + " ")
 
             for linha in c:
-                print(linha)
-                print("Dentro do for")
                 self.idCliente = linha[0]
                 self.nome = linha[1]
                 self.cpf = linha[2]

@@ -84,7 +84,7 @@ class Application():
         self.btnBuscar = Button(
             self.container2, text="Buscar", font=self.fonte, width=10)
         self.btnBuscar["command"] = self.buscarUsuario
-        self.btnBuscar.pack(side=RIGHT)
+        self.btnBuscar.pack(side=LEFT, padx=5)
 
         # input nome do usuario
         self.lblNome = Label(self.container3, text="Nome: ",
@@ -109,7 +109,7 @@ class Application():
         # input nascimento
         # TODO: adicionar placeholder aos campos
         self.lblNascimento = Label(
-            self.container5, text="Data de \nNascimento: ", font=self.fonte, width=10)
+            self.container5, text="Data de \nNascimento\n[Dia|Mes|Ano]: ", font=self.fonte, width=13)
         self.lblNascimento.pack(side=LEFT)
 
         self.txtDia = Entry(self.container5)
@@ -139,14 +139,94 @@ class Application():
 
         # input senha
         self.lblSenha = Label(
-        self.container7, text="Senha: ", font=self.fonte, width=10)
+            self.container7, text="Senha: ", font=self.fonte, width=10)
         self.lblSenha.pack(side=LEFT)
 
         self.txtSenha = Entry(self.container7)
         self.txtSenha["width"] = 25
         self.txtSenha["font"] = self.fonte
-        self.txtSenha["show"] = "*"
         self.txtSenha.pack(side=LEFT)
+
+        # input telefone
+        self.lblTelefone = Label(
+            self.container8, text="Telefone: ", font=self.fonte, width=10)
+        self.lblTelefone.pack(side=LEFT)
+
+        self.txtTelefone = Entry(self.container8)
+        self.txtTelefone["width"] = 25
+        self.txtTelefone["font"] = self.fonte
+        self.txtTelefone.pack(side=LEFT)
+
+        # input logradouro
+        self.lblLogradouro = Label(
+            self.container2, text="Logradouro: ", font=self.fonte, width=10)
+        self.lblLogradouro.pack(side=LEFT, padx=30)
+
+        self.txtLogradouro = Entry(self.container2)
+        self.txtLogradouro["width"] = 25
+        self.txtLogradouro["font"] = self.fonte
+        self.txtLogradouro.pack(side=LEFT)
+
+        # input bairro
+        self.lblBairro = Label(
+            self.container3, text="Bairro: ", font=self.fonte, width=10)
+        self.lblBairro.pack(side=LEFT, padx=34)
+
+        self.txtBairro = Entry(self.container3)
+        self.txtBairro["width"] = 25
+        self.txtBairro["font"] = self.fonte
+        self.txtBairro.pack(side=LEFT)
+
+        # input cidade
+        self.lblCidade = Label(
+            self.container4, text="Cidade: ", font=self.fonte, width=10)
+        self.lblCidade.pack(side=LEFT, padx=34)
+
+        self.txtCidade = Entry(self.container4)
+        self.txtCidade["width"] = 25
+        self.txtCidade["font"] = self.fonte
+        self.txtCidade.pack(side=LEFT)
+
+        # input cep
+        self.lblCep = Label(
+            self.container5, text="CEP: ", font=self.fonte, width=11)
+        self.lblCep.pack(side=LEFT, padx=30)
+
+        self.txtCidade = Entry(self.container5)
+        self.txtCidade["width"] = 25
+        self.txtCidade["font"] = self.fonte
+        self.txtCidade.pack(side=LEFT)
+
+        # input estado
+        self.lblEstado = Label(
+            self.container6, text="Estado: ", font=self.fonte, width=10)
+        self.lblEstado.pack(side=LEFT, padx=34)
+
+        self.txtCidade = Entry(self.container6)
+        self.txtCidade["width"] = 25
+        self.txtCidade["font"] = self.fonte
+        self.txtCidade.pack(side=LEFT)
+
+        # input complemento
+        self.lblEstado = Label(
+            self.container7, text="Estado: ", font=self.fonte, width=10)
+        self.lblEstado.pack(side=LEFT, padx=34)
+
+        self.txtCidade = Entry(self.container7)
+        self.txtCidade["width"] = 25
+        self.txtCidade["font"] = self.fonte
+        self.txtCidade.pack(side=LEFT)
+
+        # input numero
+        self.lblNumero = Label(
+            self.container8, text="Numero: ", font=self.fonte, width=10)
+        self.lblNumero.pack(side=LEFT, padx=34)
+
+        self.txtCidade = Entry(self.container8)
+        self.txtCidade["width"] = 25
+        self.txtCidade["font"] = self.fonte
+        self.txtCidade.pack(side=LEFT)
+
 
     def buscarUsuario(self):  # TODO: implementar botão
         print("Clique do botão")
