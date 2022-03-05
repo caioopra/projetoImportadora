@@ -54,6 +54,8 @@ class PaginaInicial():
 
 class LoginFuncionario():
     def __init__(self, master=None):
+        self.master = master
+
         self.container1 = Frame(master, pady=10)
         self.container1.pack()
 
@@ -69,7 +71,13 @@ class LoginFuncionario():
         # titulo da pagina
         self.titulo = Label(self.container1, text="Login Funcionário", font=(
             "Century Gothic", "12", "bold"))
-        self.titulo.pack()
+        self.titulo.pack(side=LEFT, padx=30)
+
+        # botao para voltar a selecao de tipo de usuario
+        self.btnVoltar = Button(
+            self.container1, text="Voltar", font=fontePadrao, width=10)
+        self.btnVoltar["command"] = self.voltarPagina
+        self.btnVoltar.pack(side=LEFT, padx=20)
 
         # email
         self.lblEmail = Label(
@@ -93,14 +101,21 @@ class LoginFuncionario():
         self.btnLogin["command"] = self.loginFuncionario
         self.btnLogin.pack(side=LEFT)
 
+    def voltarPagina(self):
+        self.master.destroy()
+        self.master = Tk()
+        PaginaInicial(self.master)
+        self.master.mainloop()
+
     # TODO: implementar login do funcionario
     def loginFuncionario(self):
-        pass
+        print("Click botão login")
 
 
 class CadastroCliente():
     def __init__(self, master=None):
-
+        self.master = master
+        
         # containers
         self.container1 = Frame(master)
         self.container1["pady"] = 10
@@ -149,7 +164,13 @@ class CadastroCliente():
         # Titulo
         self.titulo = Label(self.container1, text="Entrar/cadastrar conta: ")
         self.titulo["font"] = ("Century Gothic", "12", "bold")
-        self.titulo.pack()
+        self.titulo.pack(side=LEFT)
+
+        # botao voltar
+        self.btnVoltar = Button(
+            self.container1, text="Voltar", font=fontePadrao, width=10)
+        self.btnVoltar["command"] = self.voltarPagina
+        self.btnVoltar.pack(side=LEFT, padx=100)
 
         # input IdCliente
         self.lblIdCliente = Label(
@@ -307,6 +328,12 @@ class CadastroCliente():
         self.txtCidade["width"] = 25
         self.txtCidade["font"] = fontePadrao
         self.txtCidade.pack(side=LEFT)
+
+    def voltarPagina(self):
+        self.master.destroy()
+        self.master = Tk()
+        PaginaInicial(self.master)
+        self.master.mainloop()
 
     def buscarUsuario(self):  # TODO: implementar botão
         print("Clique do botão")
