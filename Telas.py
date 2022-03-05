@@ -36,7 +36,7 @@ class PaginaInicial():
         self.botaoCliente = Button(
             self.container2, text="Cliente", font=fontePadrao, width=14)
         self.botaoCliente.pack(side=LEFT, padx=8)
-        self.botaoCliente["command"] = self.clickCadastrarCliente
+        self.botaoCliente["command"] = self.clickContaCliente
 
     def clickLoginFuncionario(self):
         self.master.destroy()
@@ -44,11 +44,10 @@ class PaginaInicial():
         LoginFuncionario(self.master)
         self.master.mainloop()
 
-    # TODO: criar classe para seleção se quer login ou cadastrar cliente
-    def clickCadastrarCliente(self):
+    def clickContaCliente(self):
         self.master.destroy()
         self.master = Tk()
-        CadastroCliente(self.master)
+        ContaCliente(self.master)
         self.master.mainloop()
 
 
@@ -112,10 +111,64 @@ class LoginFuncionario():
         print("Click botão login")
 
 
+class ContaCliente():
+    def __init__(self, master=None):
+        self.master = master
+
+        self.container1 = Frame(master, padx=20, pady=10)
+        self.container1.pack()
+
+        self.container2 = Frame(master, padx=35, pady=5)
+        self.container2.pack()
+
+        self.container3 = Frame(master, padx=35, pady=5)
+        self.container3.pack()
+
+        # titulo
+        self.titulo = Label(self.container1, text="Já possui cadastro no sistema?", font=(
+            "Century Gothic", "12", "bold"))
+        self.titulo.pack(side=LEFT, padx=10)
+
+        # botao voltar
+        self.btnVoltar = Button(
+            self.container1, text="Voltar", font=fontePadrao, width=10)
+        self.btnVoltar["command"] = self.voltarPagina
+        self.btnVoltar.pack(side=LEFT, padx=70)
+
+        # botoes de selecao
+        self.btnCadastrar = Button(
+            self.container2, text="Cadastrar-se\nagora", font=fontePadrao, width=14)
+        self.btnCadastrar["command"] = self.clickCadastrarCliente
+        self.btnCadastrar.pack(side=LEFT, padx=5)
+
+        self.btnLogin = Button(
+            self.container2, text="Login", font=fontePadrao, width=14)
+        self.btnLogin["command"] = self.clickLoginCliente
+        self.btnLogin.pack(side=LEFT, padx=5)
+
+    def voltarPagina(self):
+        self.master.destroy()
+        self.master = Tk()
+        PaginaInicial(self.master)
+        self.master.mainloop()
+
+    def clickCadastrarCliente(self):
+        self.master.destroy()
+        self.master = Tk()
+        CadastroCliente(self.master)
+        self.master.mainloop()
+
+    def clickLoginCliente(self):
+        self.master.destroy()
+        self.master = Tk()
+        LoginCliente(self.master)
+        self.master.mainloop()
+
+
 class CadastroCliente():
     def __init__(self, master=None):
         self.master = master
-        
+
         # containers
         self.container1 = Frame(master)
         self.container1["pady"] = 10
@@ -162,7 +215,7 @@ class CadastroCliente():
 
         # TODO: remodelar textos
         # Titulo
-        self.titulo = Label(self.container1, text="Entrar/cadastrar conta: ")
+        self.titulo = Label(self.container1, text="Cadastrar conta: ")
         self.titulo["font"] = ("Century Gothic", "12", "bold")
         self.titulo.pack(side=LEFT)
 
@@ -338,6 +391,9 @@ class CadastroCliente():
     def buscarUsuario(self):  # TODO: implementar botão
         print("Clique do botão")
 
+
+class LoginCliente():
+    pass
 
 fontePadrao = ("Century Gothic", "10")
 
