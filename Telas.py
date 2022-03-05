@@ -8,7 +8,37 @@ cliente = Cliente("Caio", "123123123", "18-06-2003", "caioprsilva@gmail.com", "c
                   "Rua do Caçador", "Caçador", "Capivari de Baixo", "88745000", "SC", "casa", "1030")
 
 
-class Application():
+class PaginaInicial():
+    def __init__(self, master=None):
+        
+        # criacao dos containers para a pagina principal
+        self.container1 = Frame(master)
+        self.container1["padx"] = 40
+        self.container1["pady"] = 10
+        self.container1.pack()
+
+        self.container2 = Frame(master)
+        self.container2["padx"] = 20
+        self.container2["pady"] = 5
+        self.container2.pack()
+
+        # titulo e botoes de navegacao
+        self.titulo = Label(self.container1, text="Tipo de usuário")
+        self.titulo["font"] = ("Century Gothic", "15", "bold")
+        self.titulo.pack()
+
+        self.botaoFuncionario = Button(self.container2, text="Funcionário", font=fontePadrao, width=14)
+        self.botaoFuncionario["command"] = self.loginFuncionario
+        self.botaoFuncionario.pack(side=LEFT, padx=26)
+
+        self.botaoCliente = Button(self.container2, text="Cliente", font=fontePadrao, width=14)
+        self.botaoCliente.pack(side=LEFT, padx=8)
+
+    def loginFuncionario(self):
+        pass
+
+
+class CadastroCliente():
     def __init__(self, master=None):
         self.fonte = ("Century Gothic", "10")
 
@@ -223,6 +253,9 @@ class Application():
         print("Clique do botão")
 
 
+fontePadrao = ("Century Gothic", "10")
+
+
 root = Tk()
-Application(root)
+PaginaInicial(root)
 root.mainloop()
