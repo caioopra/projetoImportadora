@@ -97,7 +97,7 @@ class LoginFuncionario():
         # botao de login
         self.btnLogin = Button(
             self.container4, text="Login", font=fontePadrao, width=15)
-        self.btnLogin["command"] = self.loginFuncionario
+        # self.btnLogin["command"] = self.loginFuncionario TODO: Funcionario tem metodo login, implementar
         self.btnLogin.pack(side=LEFT)
 
     def voltarPagina(self):
@@ -106,9 +106,6 @@ class LoginFuncionario():
         PaginaInicial(self.master)
         self.master.mainloop()
 
-    # TODO: implementar login do funcionario
-    def loginFuncionario(self):
-        print("Click botão login")
 
 
 class ContaCliente():
@@ -142,7 +139,7 @@ class ContaCliente():
         self.btnCadastrar.pack(side=LEFT, padx=5)
 
         self.btnLogin = Button(
-            self.container2, text="Login", font=fontePadrao, width=14)
+            self.container2, text="Login", font=fontePadrao, width=14, height=2)
         self.btnLogin["command"] = self.clickLoginCliente
         self.btnLogin.pack(side=LEFT, padx=5)
 
@@ -385,7 +382,7 @@ class CadastroCliente():
     def voltarPagina(self):
         self.master.destroy()
         self.master = Tk()
-        PaginaInicial(self.master)
+        ContaCliente(self.master)
         self.master.mainloop()
 
     def buscarUsuario(self):  # TODO: implementar botão
@@ -393,7 +390,60 @@ class CadastroCliente():
 
 
 class LoginCliente():
-    pass
+    def __init__(self, master=None):
+        self.master = master
+
+        self.container1 = Frame(master, pady=10)
+        self.container1.pack()
+
+        self.container2 = Frame(master, padx=35, pady=5)
+        self.container2.pack()
+
+        self.container3 = Frame(master, padx=35, pady=5)
+        self.container3.pack()
+
+        self.container4 = Frame(master, padx=20, pady=15)
+        self.container4.pack()
+
+        # titulo da pagina
+        self.titulo = Label(self.container1, text="Login Cliente", font=(
+            "Century Gothic", "12", "bold"))
+        self.titulo.pack(side=LEFT, padx=30)
+
+        # botao para voltar a selecao de tipo de usuario
+        self.btnVoltar = Button(
+            self.container1, text="Voltar", font=fontePadrao, width=10)
+        self.btnVoltar["command"] = self.voltarPagina
+        self.btnVoltar.pack(side=LEFT, padx=20)
+
+        # email
+        self.lblEmail = Label(
+            self.container2, text="Email: ", font=fontePadrao, width=10)
+        self.lblEmail.pack(side=LEFT)
+
+        self.txtEmail = Entry(self.container2, width=30, font=fontePadrao)
+        self.txtEmail.pack(side=LEFT)
+
+        # senha
+        self.lblSenha = Label(
+            self.container3, text="Senha: ", font=fontePadrao, width=10)
+        self.lblSenha.pack(side=LEFT)
+
+        self.txtSenha = Entry(self.container3, width=30, font=fontePadrao)
+        self.txtSenha.pack(side=LEFT)
+
+        # botao de login TODO: criar login (Cliente possui metodo login)
+        self.btnLogin = Button(
+            self.container4, text="Login", font=fontePadrao, width=15)
+        # self.btnLogin["command"] = self.loginFuncionario
+        self.btnLogin.pack(side=LEFT)
+
+    def voltarPagina(self):
+        self.master.destroy()
+        self.master = Tk()
+        ContaCliente(self.master)
+        self.master.mainloop()
+
 
 fontePadrao = ("Century Gothic", "10")
 
