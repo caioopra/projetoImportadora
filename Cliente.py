@@ -86,7 +86,7 @@ class Cliente():
             c.close()
 
             if not (email == self.email and senha == self.senha):
-                return "Email ou senha inválido, tente novamente"
+                print("Email ou senha inválido, tente novamente")
             else:
                 print("Login efetuado com sucesso")
 

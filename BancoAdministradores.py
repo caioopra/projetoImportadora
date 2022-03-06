@@ -3,7 +3,7 @@ import sqlite3
 
 class BancoAdministradores():
     def __init__(self):
-        self.conexao = sqlite3.connect("bancoAdministradores.db")
+        self.conexao = sqlite3.connect("databases/bancoAdministradores.db")
         self.createTable()
 
     def createTable(self):
