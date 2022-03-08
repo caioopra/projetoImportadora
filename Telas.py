@@ -12,7 +12,7 @@ class PaginaInicial():
         # criacao dos containers para a pagina principal
         self.container1 = Frame(master)
         self.container1["padx"] = 40
-        self.container1["pady"] = 10
+        self.container1["pady"] = 35
         self.container1.pack()
 
         self.container2 = Frame(master)
@@ -38,12 +38,16 @@ class PaginaInicial():
     def clickLoginFuncionario(self):
         self.master.destroy()
         self.master = Tk()
+        self.master.title("Login Funcionário")
+        centralizarJanela(self.master, 600, 250)
         LoginFuncionario(self.master)
         self.master.mainloop()
 
     def clickContaCliente(self):
         self.master.destroy()
         self.master = Tk()
+        self.master.title("Cliente")
+        centralizarJanela(self.master, 600, 200)
         ContaCliente(self.master)
         self.master.mainloop()
 
@@ -107,6 +111,8 @@ class LoginFuncionario():
     def voltarPagina(self):
         self.master.destroy()
         self.master = Tk()
+        self.master.title("Importadora")
+        centralizarJanela(self.master, 600, 200)
         PaginaInicial(self.master)
         self.master.mainloop()
 
@@ -123,10 +129,10 @@ class ContaCliente():
     def __init__(self, master=None):
         self.master = master
 
-        self.container1 = Frame(master, padx=20, pady=10)
+        self.container1 = Frame(master, padx=30, pady=15)
         self.container1.pack()
 
-        self.container2 = Frame(master, padx=35, pady=5)
+        self.container2 = Frame(master, padx=40, pady=25)
         self.container2.pack()
 
         self.container3 = Frame(master, padx=35, pady=5)
@@ -134,20 +140,20 @@ class ContaCliente():
 
         # titulo
         self.titulo = Label(self.container1, text="Já possui cadastro no sistema?", font=(
-            "Century Gothic", "12", "bold"))
+            "Century Gothic", "12", "bold"), width=50)
         self.titulo.pack(side=LEFT, padx=10)
 
         # botao voltar
         self.btnVoltar = Button(
-            self.container1, text="Voltar", font=fontePadrao, width=10)
+            self.container1, text="Voltar", font=fontePadrao, width=15)
         self.btnVoltar["command"] = self.voltarPagina
-        self.btnVoltar.pack(side=LEFT, padx=70)
+        self.btnVoltar.pack(side=LEFT)
 
         # botoes de selecao
         self.btnCadastrar = Button(
             self.container2, text="Cadastrar-se\nagora", font=fontePadrao, width=14)
         self.btnCadastrar["command"] = self.clickCadastrarCliente
-        self.btnCadastrar.pack(side=LEFT, padx=5)
+        self.btnCadastrar.pack(side=LEFT, padx=25)
 
         self.btnLogin = Button(
             self.container2, text="Login", font=fontePadrao, width=14, height=2)
@@ -157,18 +163,24 @@ class ContaCliente():
     def voltarPagina(self):
         self.master.destroy()
         self.master = Tk()
+        self.master.title("Importadora")
+        centralizarJanela(self.master, 600, 200)
         PaginaInicial(self.master)
         self.master.mainloop()
 
     def clickCadastrarCliente(self):
         self.master.destroy()
         self.master = Tk()
+        self.master.title("Cadastro Cliente")
+        centralizarJanela(self.master, 650, 400)
         CadastroCliente(self.master)
         self.master.mainloop()
 
     def clickLoginCliente(self):
         self.master.destroy()
         self.master = Tk()
+        self.master.title("Login Cliente")
+        centralizarJanela(self.master, 600, 250)
         LoginCliente(self.master)
         self.master.mainloop()
 
@@ -390,6 +402,8 @@ class CadastroCliente():
     def voltarPagina(self):
         self.master.destroy()
         self.master = Tk()
+        self.master.title("Importadora")
+        centralizarJanela(self.master, 600, 200)
         ContaCliente(self.master)
         self.master.mainloop()
 
@@ -490,6 +504,8 @@ class LoginCliente():
     def voltarPagina(self):
         self.master.destroy()
         self.master = Tk()
+        self.master.title("Seleção cliente")
+        centralizarJanela(self.master, 600, 200)
         ContaCliente(self.master)
         self.master.mainloop()
 
@@ -504,9 +520,33 @@ class LoginCliente():
         # TODO: criar próxima tela (primeiro criar Funcionario/Adm e produtos/moeda)
 
 
+class ClienteLogado():
+    pass
+
+
+class FuncionarioLogado():
+    def __init__(self, master=None):
+        self.master = master
+
+
+        # TODO: continuar a criar a tela
+            # botões: conta, produtos, ?moedas?
+
+def centralizarJanela(janela, largura, altura):
+
+    largura_tela = janela.winfo_screenwidth()
+    altura_tela = janela.winfo_screenheight()
+
+    coord_x = int((largura_tela/2) - largura/2)
+    coord_y = int((altura_tela/2) - altura/2)
+    janela.geometry(f"{largura}x{altura}+{coord_x}+{coord_y}")
+
+
 fontePadrao = ("Century Gothic", "10")
 
 
 root = Tk()
+root.title("Importadora")
+centralizarJanela(root, 600, 200)
 PaginaInicial(root)
 root.mainloop()
