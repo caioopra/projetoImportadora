@@ -6,7 +6,7 @@ from Endereco import Endereco
 
 cliente = Cliente("Caio", "123123123", "18-06-2003", "caioprsilva@gmail.com", "caiopra", "48999154099",
                   "Rua do Caçador", "Caçador", "Capivari de Baixo", "88745000", "SC", "casa", "1030")
-# cliente.login(1, "caioprsilva@gmail.com", "caiopra")
+# print(cliente.login("caioprsilva@gmail.com", "caiopra"))
 
 
 class PaginaInicial():
@@ -372,7 +372,7 @@ class CadastroCliente():
         self.txtNumero.pack(side=LEFT)
 
         # mensagem de sucesso/erro
-        self.lblMsg = Label(self.container9, text="Teste",
+        self.lblMsg = Label(self.container9, text="",
                             font=("Century Gothic", "11", "italic"))
         self.lblMsg.pack()
 
@@ -419,6 +419,7 @@ class CadastroCliente():
         self.txtComplemento.delete(0, END)
         self.txtNumero.delete(0, END)
 
+
 class LoginCliente():
     def __init__(self, master=None):
         self.master = master
@@ -434,6 +435,9 @@ class LoginCliente():
 
         self.container4 = Frame(master, padx=20, pady=15)
         self.container4.pack()
+
+        self.container5 = Frame(master, pady=15)
+        self.container5.pack()
 
         # titulo da pagina
         self.titulo = Label(self.container1, text="Login Cliente", font=(
@@ -465,14 +469,30 @@ class LoginCliente():
         # botao de login TODO: criar login (Cliente possui metodo login)
         self.btnLogin = Button(
             self.container4, text="Login", font=fontePadrao, width=15)
-        # self.btnLogin["command"] = self.loginFuncionario
+        self.btnLogin["command"] = self.loginFuncionario
         self.btnLogin.pack(side=LEFT)
+
+        self.lblMsg = Label(self.container5, text="", font=(
+            "Century Gothic", "11", "italic"))
+        self.lblMsg.pack()
 
     def voltarPagina(self):
         self.master.destroy()
         self.master = Tk()
         ContaCliente(self.master)
         self.master.mainloop()
+
+    def loginFuncionario(self):
+        cliente = Cliente()
+
+        email = self.txtEmail.get()
+        senha = self.txtSenha.get()
+
+        print(email, senha)
+
+        self.lblMsg["text"] = cliente.login(email,senha)
+
+
 
 
 fontePadrao = ("Century Gothic", "10")

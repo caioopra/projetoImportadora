@@ -60,18 +60,21 @@ class Cliente():
         except:
             return "Ocorreu um erro na exclusão do cliente"
 
-    def login(self, idCliente, email, senha):  # usar com email e senha
+    def login(self, email, senha):  # usar com email e senha
         banco = Banco()
         try:
             c = banco.conexao.cursor()
-            c.execute("select * from usuarios where idCliente = " +
-                      str(idCliente) + " ")
 
-            for linha in c:
+            query_teste = f"""select * from usuarios where email = ?"""
+            c.execute(query_teste, (email,))
+            dados = c.fetchall()
+            print(dados)
+
+            for linha in dados:
                 self.idCliente = linha[0]
                 self.nome = linha[1]
                 self.cpf = linha[2]
-                self.nascimento = linha[3] 
+                self.nascimento = linha[3]
                 self.email = linha[4]
                 self.senha = linha[5]
                 self.telefone = linha[6]
@@ -87,6 +90,7 @@ class Cliente():
 
             if not (email == self.email and senha == self.senha):
                 print("Email ou senha inválido, tente novamente")
+                print(f"email: {email} senha {senha}\n s.email {self.email} s.senha {self.senha}")
             else:
                 print("Login efetuado com sucesso")
 
