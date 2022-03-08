@@ -214,46 +214,34 @@ class CadastroCliente():
         # Titulo
         self.titulo = Label(self.container1, text="Cadastrar conta: ")
         self.titulo["font"] = ("Century Gothic", "12", "bold")
-        self.titulo.pack(side=LEFT)
+        self.titulo.pack(side=LEFT, padx=80)
+
+        self.vazio = Label(self.container1, text="",
+                           font=fontePadrao, width=30)
+        self.vazio.pack(side=LEFT)
 
         # botao voltar
         self.btnVoltar = Button(
             self.container1, text="Voltar", font=fontePadrao, width=10)
         self.btnVoltar["command"] = self.voltarPagina
-        self.btnVoltar.pack(side=LEFT, padx=100)
-
-        # input IdCliente
-        self.lblIdCliente = Label(
-            self.container2, text="idCliente", font=fontePadrao, width=10)
-        self.lblIdCliente.pack(side=LEFT)
-
-        self.txtIdCliente = Entry(self.container2)
-        self.txtIdCliente["width"] = 12
-        self.txtIdCliente["font"] = fontePadrao
-        self.txtIdCliente.pack(side=LEFT)
-
-        # botao de buscar ao lado do IdCliente
-        self.btnBuscar = Button(
-            self.container2, text="Buscar", font=fontePadrao, width=10)
-        self.btnBuscar["command"] = self.buscarUsuario
-        self.btnBuscar.pack(side=LEFT, padx=5)
+        self.btnVoltar.pack(side=LEFT, padx=40)
 
         # input nome do usuario
-        self.lblNome = Label(self.container3, text="Nome: ",
+        self.lblNome = Label(self.container2, text="Nome: ",
                              font=fontePadrao, width=10)
         self.lblNome.pack(side=LEFT)
 
-        self.txtNome = Entry(self.container3)
+        self.txtNome = Entry(self.container2)
         self.txtNome["width"] = 25
         self.txtNome["font"] = fontePadrao
         self.txtNome.pack(side=LEFT)
 
         # input CPF
         self.lblCpf = Label(
-            self.container4, text="CPF: ", font=fontePadrao, width=10)
+            self.container3, text="CPF: ", font=fontePadrao, width=10)
         self.lblCpf.pack(side=LEFT)
 
-        self.txtCpf = Entry(self.container4)
+        self.txtCpf = Entry(self.container3)
         self.txtCpf["width"] = 25
         self.txtCpf["font"] = fontePadrao
         self.txtCpf.pack(side=LEFT)
@@ -261,58 +249,64 @@ class CadastroCliente():
         # input nascimento
         # TODO: adicionar placeholder aos campos
         self.lblNascimento = Label(
-            self.container5, text="Data de \nNascimento\n[Dia|Mes|Ano]: ", font=fontePadrao, width=13)
+            self.container4, text="Data de \nNascimento\n[Dia|Mes|Ano]: ", font=fontePadrao, width=13)
         self.lblNascimento.pack(side=LEFT)
 
-        self.txtDia = Entry(self.container5)
+        self.txtDia = Entry(self.container4)
         self.txtDia["width"] = 5
         self.txtDia["font"] = fontePadrao
         self.txtDia.pack(side=LEFT, padx=5)
 
-        self.txtMes = Entry(self.container5)
+        self.txtMes = Entry(self.container4)
         self.txtMes["width"] = 5
         self.txtMes["font"] = fontePadrao
         self.txtMes.pack(side=LEFT, padx=5)
 
-        self.txtAno = Entry(self.container5)
+        self.txtAno = Entry(self.container4)
         self.txtAno["width"] = 6
         self.txtAno["font"] = fontePadrao
         self.txtAno.pack(side=LEFT, padx=5)
 
         # input email
         self.lblEmail = Label(
-            self.container6, text="Email: ", font=fontePadrao, width=10)
+            self.container5, text="Email: ", font=fontePadrao, width=10)
         self.lblEmail.pack(side=LEFT)
 
-        self.txtEmail = Entry(self.container6)
+        self.txtEmail = Entry(self.container5)
         self.txtEmail["width"] = 25
         self.txtEmail["font"] = fontePadrao
         self.txtEmail.pack(side=LEFT)
 
         # input senha
         self.lblSenha = Label(
-            self.container7, text="Senha: ", font=fontePadrao, width=10)
+            self.container6, text="Senha: ", font=fontePadrao, width=10)
         self.lblSenha.pack(side=LEFT)
 
-        self.txtSenha = Entry(self.container7)
+        self.txtSenha = Entry(self.container6)
         self.txtSenha["width"] = 25
         self.txtSenha["font"] = fontePadrao
         self.txtSenha.pack(side=LEFT)
 
         # input telefone
         self.lblTelefone = Label(
-            self.container8, text="Telefone: ", font=fontePadrao, width=10)
+            self.container7, text="Telefone: ", font=fontePadrao, width=10)
         self.lblTelefone.pack(side=LEFT)
 
-        self.txtTelefone = Entry(self.container8)
+        self.txtTelefone = Entry(self.container7)
         self.txtTelefone["width"] = 25
         self.txtTelefone["font"] = fontePadrao
         self.txtTelefone.pack(side=LEFT)
 
+        # botao de cadastro
+        self.btnCadastrar = Button(
+            self.container8, text="Enviar", font=fontePadrao, width=12)
+        self.btnCadastrar["command"] = self.cadastrarCliente
+        self.btnCadastrar.pack(side=LEFT, padx=81)
+
         # input logradouro
         self.lblLogradouro = Label(
             self.container2, text="Logradouro: ", font=fontePadrao, width=10)
-        self.lblLogradouro.pack(side=LEFT, padx=30)
+        self.lblLogradouro.pack(side=LEFT, padx=34)
 
         self.txtLogradouro = Entry(self.container2)
         self.txtLogradouro["width"] = 25
@@ -344,40 +338,40 @@ class CadastroCliente():
             self.container5, text="CEP: ", font=fontePadrao, width=11)
         self.lblCep.pack(side=LEFT, padx=30)
 
-        self.txtCidade = Entry(self.container5)
-        self.txtCidade["width"] = 25
-        self.txtCidade["font"] = fontePadrao
-        self.txtCidade.pack(side=LEFT)
+        self.txtCep = Entry(self.container5)
+        self.txtCep["width"] = 25
+        self.txtCep["font"] = fontePadrao
+        self.txtCep.pack(side=LEFT)
 
         # input estado
         self.lblEstado = Label(
             self.container6, text="Estado: ", font=fontePadrao, width=10)
         self.lblEstado.pack(side=LEFT, padx=34)
 
-        self.txtCidade = Entry(self.container6)
-        self.txtCidade["width"] = 25
-        self.txtCidade["font"] = fontePadrao
-        self.txtCidade.pack(side=LEFT)
+        self.txtEstado = Entry(self.container6)
+        self.txtEstado["width"] = 25
+        self.txtEstado["font"] = fontePadrao
+        self.txtEstado.pack(side=LEFT)
 
         # input complemento
-        self.lblEstado = Label(
-            self.container7, text="Estado: ", font=fontePadrao, width=10)
-        self.lblEstado.pack(side=LEFT, padx=34)
+        self.lblComplemento = Label(
+            self.container7, text="Complemento: ", font=fontePadrao, width=12)
+        self.lblComplemento.pack(side=LEFT, padx=27)
 
-        self.txtCidade = Entry(self.container7)
-        self.txtCidade["width"] = 25
-        self.txtCidade["font"] = fontePadrao
-        self.txtCidade.pack(side=LEFT)
+        self.txtComplemento = Entry(self.container7)
+        self.txtComplemento["width"] = 25
+        self.txtComplemento["font"] = fontePadrao
+        self.txtComplemento.pack(side=LEFT)
 
         # input numero
         self.lblNumero = Label(
-            self.container8, text="Numero: ", font=fontePadrao, width=10)
-        self.lblNumero.pack(side=LEFT, padx=34)
+            self.container8, text="Numero: ", font=fontePadrao, width=18)
+        self.lblNumero.pack(side=LEFT)
 
-        self.txtCidade = Entry(self.container8)
-        self.txtCidade["width"] = 25
-        self.txtCidade["font"] = fontePadrao
-        self.txtCidade.pack(side=LEFT)
+        self.txtNumero = Entry(self.container8)
+        self.txtNumero["width"] = 25
+        self.txtNumero["font"] = fontePadrao
+        self.txtNumero.pack(side=LEFT)
 
     def voltarPagina(self):
         self.master.destroy()
@@ -385,8 +379,8 @@ class CadastroCliente():
         ContaCliente(self.master)
         self.master.mainloop()
 
-    def buscarUsuario(self):  # TODO: implementar botão
-        print("Clique do botão")
+    def cadastrarCliente(self):
+        pass
 
 
 class LoginCliente():
