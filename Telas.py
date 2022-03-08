@@ -210,11 +210,10 @@ class CadastroCliente():
         self.container9["pady"] = 15
         self.container9.pack()
 
-        # TODO: remodelar textos
         # Titulo
         self.titulo = Label(self.container1, text="Cadastrar conta: ")
         self.titulo["font"] = ("Century Gothic", "12", "bold")
-        self.titulo.pack(side=LEFT, padx=80)
+        self.titulo.pack(side=LEFT, padx=60)
 
         self.vazio = Label(self.container1, text="",
                            font=fontePadrao, width=30)
@@ -247,7 +246,6 @@ class CadastroCliente():
         self.txtCpf.pack(side=LEFT)
 
         # input nascimento
-        # TODO: adicionar placeholder aos campos
         self.lblNascimento = Label(
             self.container4, text="Data de \nNascimento\n[Dia|Mes|Ano]: ", font=fontePadrao, width=13)
         self.lblNascimento.pack(side=LEFT)
@@ -373,6 +371,11 @@ class CadastroCliente():
         self.txtNumero["font"] = fontePadrao
         self.txtNumero.pack(side=LEFT)
 
+        # mensagem de sucesso/erro
+        self.lblMsg = Label(self.container9, text="Teste",
+                            font=("Century Gothic", "11", "italic"))
+        self.lblMsg.pack()
+
     def voltarPagina(self):
         self.master.destroy()
         self.master = Tk()
@@ -380,8 +383,41 @@ class CadastroCliente():
         self.master.mainloop()
 
     def cadastrarCliente(self):
-        pass
+        cliente = Cliente()
+        endereco = Endereco()
 
+        cliente.nome = self.txtNome.get()
+        cliente.cpf = self.txtCpf.get()
+        cliente.nascimento = f"{self.txtDia.get()}-{self.txtMes.get()}-{self.txtAno.get()}"
+        cliente.email = self.txtEmail.get()
+        cliente.senha = self.txtSenha.get()
+        cliente.telefone = self.txtTelefone.get()
+        endereco.logradouro = self.txtLogradouro.get()
+        endereco.bairro = self.txtBairro.get()
+        endereco.cidade = self.txtCidade.get()
+        endereco.cep = self.txtCep.get()
+        endereco.estado = self.txtEstado.get()
+        endereco.complemento = self.txtComplemento.get()
+        endereco.numero = self.txtNumero.get()
+        cliente.endereco = endereco
+
+        self.lblMsg["text"] = cliente.cadastrarCliente()
+
+        self.txtNome.delete(0, END)
+        self.txtCpf.delete(0, END)
+        self.txtDia.delete(0, END)
+        self.txtMes.delete(0, END)
+        self.txtAno.delete(0, END)
+        self.txtEmail.delete(0, END)
+        self.txtSenha.delete(0, END)
+        self.txtTelefone.delete(0, END)
+        self.txtLogradouro.delete(0, END)
+        self.txtBairro.delete(0, END)
+        self.txtCidade.delete(0, END)
+        self.txtCep.delete(0, END)
+        self.txtEstado.delete(0, END)
+        self.txtComplemento.delete(0, END)
+        self.txtNumero.delete(0, END)
 
 class LoginCliente():
     def __init__(self, master=None):
@@ -408,7 +444,7 @@ class LoginCliente():
         self.btnVoltar = Button(
             self.container1, text="Voltar", font=fontePadrao, width=10)
         self.btnVoltar["command"] = self.voltarPagina
-        self.btnVoltar.pack(side=LEFT, padx=20)
+        self.btnVoltar.pack(side=LEFT)
 
         # email
         self.lblEmail = Label(
