@@ -17,7 +17,7 @@ class BancoFuncionarios():
                      email text,
                      senha text,
                      telefone text,
-                     desconto integer""")
+                     admin text)""")
         self.conexao.commit()
         c.close()
 

@@ -1,12 +1,7 @@
 from tkinter import *
-from Banco import Banco
 from Cliente import Cliente
 from Endereco import Endereco
-
-
-cliente = Cliente("Caio", "123123123", "18-06-2003", "caioprsilva@gmail.com", "caiopra", "48999154099",
-                  "Rua do Caçador", "Caçador", "Capivari de Baixo", "88745000", "SC", "casa", "1030")
-# print(cliente.login("caioprsilva@gmail.com", "caiopra"))
+from Funcionario import Funcionario
 
 
 class PaginaInicial():
@@ -68,6 +63,9 @@ class LoginFuncionario():
         self.container4 = Frame(master, padx=20, pady=15)
         self.container4.pack()
 
+        self.container5 = Frame(master, pady=15)
+        self.container5.pack()
+
         # titulo da pagina
         self.titulo = Label(self.container1, text="Login Funcionário", font=(
             "Century Gothic", "12", "bold"))
@@ -98,14 +96,26 @@ class LoginFuncionario():
         # botao de login
         self.btnLogin = Button(
             self.container4, text="Login", font=fontePadrao, width=15)
-        # self.btnLogin["command"] = self.loginFuncionario TODO: Funcionario tem metodo login, implementar
+        self.btnLogin["command"] = self.loginFuncionario
         self.btnLogin.pack(side=LEFT)
+
+        self.lblMsg = Label(self.container5, text="", font=(
+            "Century Gothic", "11", "italic"))
+        self.lblMsg.pack()
 
     def voltarPagina(self):
         self.master.destroy()
         self.master = Tk()
         PaginaInicial(self.master)
         self.master.mainloop()
+
+    def loginFuncionario(self):
+        funcionario = Funcionario()
+
+        email = self.txtEmail.get()
+        senha = self.txtSenha.get()
+
+        self.lblMsg["text"] = funcionario.login(email, senha)
 
 
 class ContaCliente():
@@ -488,11 +498,9 @@ class LoginCliente():
         email = self.txtEmail.get()
         senha = self.txtSenha.get()
 
-        print(email, senha)
+        self.lblMsg["text"] = cliente.login(email, senha)
 
-        self.lblMsg["text"] = cliente.login(email,senha)
-
-
+        # TODO: criar próxima tela (primeiro criar Funcionario/Adm e produtos/moeda)
 
 
 fontePadrao = ("Century Gothic", "10")

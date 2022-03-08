@@ -60,15 +60,16 @@ class Cliente():
         except:
             return "Ocorreu um erro na exclusão do cliente"
 
-    def login(self, email, senha):  # usar com email e senha
+     # TODO: apenas fazer atribuição depois da verificação; retornar True ou False e deixar mensagem para o arquivo de Telas
+     # TODO 2: apagar prints de debug quando terminar de implementar
+    def login(self, email, senha): 
         banco = Banco()
         try:
             c = banco.conexao.cursor()
 
-            query_teste = f"""select * from usuarios where email = ?"""
-            c.execute(query_teste, (email,))
+            query = """select * from usuarios where email = ?"""
+            c.execute(query, (email,))
             dados = c.fetchall()
-            print(dados)
 
             for linha in dados:
                 self.idCliente = linha[0]
@@ -88,12 +89,12 @@ class Cliente():
 
             c.close()
 
-            if not (email == self.email and senha == self.senha):
-                print("Email ou senha inválido, tente novamente")
-                print(f"email: {email} senha {senha}\n s.email {self.email} s.senha {self.senha}")
+            if self.email == "":
+                return "Conta não encontrada"
+            elif not (email == self.email and senha == self.senha):
+                return "Email ou senha incorretos, tente novamente"
             else:
-                print("Login efetuado com sucesso")
-
-            return "Busca feita com sucesso"
+                print(dados)
+                return "Login efetuado com sucesso"
         except:
-            return "Ocorreu um erro na busca do usuário"
+            return "Ocorreu um erro no login do cliente"
