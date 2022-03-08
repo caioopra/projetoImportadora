@@ -62,7 +62,7 @@ class Cliente():
 
      # TODO: apenas fazer atribuição depois da verificação; retornar True ou False e deixar mensagem para o arquivo de Telas
      # TODO 2: apagar prints de debug quando terminar de implementar
-    def login(self, email, senha): 
+    def login(self, email, senha):
         banco = Banco()
         try:
             c = banco.conexao.cursor()

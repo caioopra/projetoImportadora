@@ -13,7 +13,7 @@ class Funcionario():
         self.telefone = telefone
         self.idFuncionario = idFuncionario
 
-    #TODO: usar essa função dentro do admin para cadastrar um funcionario
+    # TODO: usar essa função dentro do admin para cadastrar um funcionario
     # def cadastrarCliente(self):
     #     banco = BancoFuncionarios()
 
@@ -35,30 +35,30 @@ class Funcionario():
 
     def login(self, email, senha):
         banco = BancoFuncionarios()
-        # try:
-        c = banco.conexao.cursor()
+        try:
+            c = banco.conexao.cursor()
 
-        query = """select * from usuarios where email = ?"""
-        c.execute(query, (email,))
-        dados = c.fetchall()
+            query = """select * from usuarios where email = ?"""
+            c.execute(query, (email,))
+            dados = c.fetchall()
 
-        for linha in dados:
-            self.idFuncionario = linha[0]
-            self.nome = linha[1]
-            self.cpf = linha[2]
-            self.nascimento = linha[3]
-            self.email = linha[4]
-            self.senha = linha[5]
-            self.telefone = linha[6]
-            self.admin = linha[7]
+            for linha in dados:
+                self.idFuncionario = linha[0]
+                self.nome = linha[1]
+                self.cpf = linha[2]
+                self.nascimento = linha[3]
+                self.email = linha[4]
+                self.senha = linha[5]
+                self.telefone = linha[6]
+                self.admin = linha[7]
 
-        c.close()
-        if self.email == "":
-            return "Conta não encontrada"
-        elif not(email == self.email and senha == self.senha):
-            return "Email ou senha incorretos, tente novamente"
-        else:
-            print(dados)
-            return "Login efetuado com sucesso"
-        # except:
-        #     return "Erro no login do funcionario"
+            c.close()
+            if self.email == "":
+                return "Conta não encontrada"
+            elif not(email == self.email and senha == self.senha):
+                return "Email ou senha incorretos, tente novamente"
+            else:
+                print(dados)
+                return "Login efetuado com sucesso"
+        except:
+            return "Erro no login do funcionario"

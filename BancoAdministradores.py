@@ -13,11 +13,11 @@ class BancoAdministradores():
                      idAdministrador integer primary key autoincrement,
                      nome text,
                      cpf text,
-                     nascimento text,
                      email text,
                      senha text,
+                     nascimento text,
                      telefone text,
                      emailNotificacoes text,
-                     admin text""")
+                     admin text)""")
         self.conexao.commit()
         c.close()

@@ -1,4 +1,5 @@
 from tkinter import *
+from Administrador import Administrador
 from Cliente import Cliente
 from Endereco import Endereco
 from Funcionario import Funcionario
