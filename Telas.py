@@ -8,6 +8,7 @@ cliente = Cliente("Caio", "123123123", "18-06-2003", "caioprsilva@gmail.com", "c
                   "Rua do Caçador", "Caçador", "Capivari de Baixo", "88745000", "SC", "casa", "1030")
 # cliente.login(1, "caioprsilva@gmail.com", "caiopra")
 
+
 class PaginaInicial():
     def __init__(self, master=None):
         self.master = master
@@ -105,7 +106,6 @@ class LoginFuncionario():
         self.master = Tk()
         PaginaInicial(self.master)
         self.master.mainloop()
-
 
 
 class ContaCliente():
