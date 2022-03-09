@@ -17,7 +17,6 @@ class Produto():
             if listaMoedas[i][2] == self.moeda:
                 self.valorVenda = round(float(
                     self.valorCompra) * (1 + float(self.taxaLucro) / 100) * listaMoedas[i][3], 2)
-                print("valorVenda: R$", self.valorVenda)
                 break
 
         if int(qtdDisponivel) > 0:
@@ -34,7 +33,7 @@ class Produto():
         try:
             c = banco.conexao.cursor()
             c.execute(
-                "insert into produtos (produto, valorCompra, moeda, taxaLucro, valorVenda, qtdDisponivel, disponivel) values ('" + self.produto + "', '" + self.valorCompra + "', '" + self.moeda + "', '" + self.taxaLucro + "', '" + self.valorVenda + "', '" + self.qtdDisponivel + "', '" + self.disponivel + "') ")
+                "insert into produtos (produto, valorCompra, moeda, taxaLucro, valorVenda, qtdDisponivel, disponivel) values ('" + self.produto + "', '" + str(self.valorCompra) + "', '" + self.moeda + "', '" + str(self.taxaLucro) + "', '" + str(self.valorVenda) + "', '" + str(self.qtdDisponivel) + "', '" + str(self.disponivel) + "') ")
 
             banco.conexao.commit()
             c.close()
@@ -100,30 +99,57 @@ def atualizarCotacoes():
 
             listaAtualizada.append(
                 (tupla[0], tupla[1], codigo, novoValor, atualizacao))
-        print(listaAtualizada)
+        print("Lista atualizada: ", listaAtualizada)
 
         banco = BancoMoedas()
 
         for moeda in listaAtualizada:
             c = banco.conexao.cursor()
             c.execute("update moedas set nome = '" + moeda[1] + "', sigla = '" + moeda[2] +
-                        "', cotacao = '" + str(moeda[3]) + "', horarioAtualizacao = '" + moeda[4] + "' where idMoeda = " + str(moeda[0]) + " ")
+                      "', cotacao = '" + str(moeda[3]) + "', horarioAtualizacao = '" + moeda[4] + "' where idMoeda = " + str(moeda[0]) + " ")
             banco.conexao.commit()
             c.close()
-        return "Moedas atualizadas com sucesso"
+
+        # analises das moedas
+        analiseMoedas = {}
+        for i in range(len(listaMoedas)):
+            sigla = listaMoedas[i][2]
+            porcentagem = (
+                (listaAtualizada[i][3] / valoresAntigos[sigla]) - 1) * 100
+            variacao = listaAtualizada[i][3] - valoresAntigos[sigla]
+
+            analiseMoedas[sigla] = {"Porcentagem": round(
+                porcentagem, 2), "Variacao": round(variacao, 5)}
+            print(porcentagem, variacao)
+        print("Analise das moedas: ", analiseMoedas)
+
+        listaProdutos = atualizarPrecos()
+
+        return "Moedas e preços atualizadas com sucesso"
     except:
         return "Erro ao atualizar cotações"
 
 
-    # atualizarPrecos()
-
-
 def atualizarPrecos():
-    pass
+    banco = BancoProdutos()
+
+    c = banco.conexao.cursor()
+    c.execute("""select * from produtos""")
+    dados = c.fetchall()
+    # cada linha dos dados é um produto diferente
+
+    listaProdutos = []
+    for linha in dados:
+        produto = Produto(linha[1], linha[2], linha[3], linha[4], linha[6])
+        listaProdutos.append(produto)
+    print("Lista produtos: ", listaProdutos)
+
+    c.close()
+
+    return listaProdutos
 
 
-moeda = Moeda("dolar", "USD", 5.06, "08/03/2022 - 22:52:30")
-euro = Moeda("Euro", "EUR", 5.52, "09/03/2022 - 00:32:15")
+# TODO: fazer as moedas atualizarem apenas de 30 em 30 min
 
 listaMoedas = listarMoedas()
 print("Moedas: ", listaMoedas)
@@ -131,4 +157,5 @@ print("Moedas: ", listaMoedas)
 print(atualizarCotacoes())
 
 
-camera = Produto("Celular Samsung S22", "799", "USD", "10", "3")
+celular = Produto("Celular Samsung S22", "799", "USD", "10", "3")
+camera = Produto("Camera Nikon D5000", "699", "EUR", "8", "2")
