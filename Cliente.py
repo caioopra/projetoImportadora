@@ -6,7 +6,6 @@ class Cliente():
     def __init__(self, nome="", cpf="", nascimento="", email="", senha="", telefone="", logradouro="", bairro="", cidade="", cep="", estado="", complemento="", numero="", idCliente=0):
 
         self.nome = nome
-        self.idCliente = idCliente
         self.cpf = cpf
         self.nascimento = nascimento
         self.email = email
@@ -14,6 +13,7 @@ class Cliente():
         self.telefone = telefone
         self.endereco = Endereco(
             logradouro, bairro, cidade, cep, estado, complemento, numero)
+        self.idCliente = idCliente
 
     def cadastrarCliente(self):
         banco = Banco()

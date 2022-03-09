@@ -1,5 +1,4 @@
 from tkinter import *
-from Administrador import Administrador
 from Cliente import Cliente
 from Endereco import Endereco
 from Funcionario import Funcionario
@@ -528,9 +527,16 @@ class FuncionarioLogado():
     def __init__(self, master=None):
         self.master = master
 
-
         # TODO: continuar a criar a tela
-            # botões: conta, produtos, ?moedas?
+        # botões: conta, produtos, ?moedas?
+
+
+class PaginaProdutos():
+    def __init__(self, master=None):
+        self.master = master
+
+
+
 
 def centralizarJanela(janela, largura, altura):
 
