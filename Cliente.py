@@ -60,8 +60,6 @@ class Cliente():
         except:
             return "Ocorreu um erro na exclusão do cliente"
 
-     # TODO: apenas fazer atribuição depois da verificação; retornar True ou False e deixar mensagem para o arquivo de Telas
-     # TODO 2: apagar prints de debug quando terminar de implementar
     def login(self, email, senha):
         banco = Banco()
         try:
@@ -94,7 +92,6 @@ class Cliente():
             elif not (email == self.email and senha == self.senha):
                 return "Email ou senha incorretos, tente novamente"
             else:
-                print(dados)
                 return "Login efetuado com sucesso"
         except:
             return "Ocorreu um erro no login do cliente"
