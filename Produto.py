@@ -85,21 +85,35 @@ def listarMoedas():
 
 
 def atualizarCotacoes():
-    valoresAntigos = {}
+    try:
+        valoresAntigos = {}
 
-    for i in range(len(listaMoedas)):
-        valoresAntigos[listaMoedas[i][2]] = listaMoedas[i][3]
-    print("Valores antigos: ", valoresAntigos)
+        for i in range(len(listaMoedas)):
+            valoresAntigos[listaMoedas[i][2]] = listaMoedas[i][3]
+        print("Valores antigos: ", valoresAntigos)
 
-    listaAtualizada = []
-    for tupla in listaMoedas:
-        codigo = tupla[2]
-        novoValor = CurrencyRates().get_rate(codigo, "BRL")
-        atualizacao = datetime.now().strftime("%d/%m/%Y - %H:%M:%S")
+        listaAtualizada = []
+        for tupla in listaMoedas:
+            codigo = tupla[2]
+            novoValor = round(CurrencyRates().get_rate(codigo, "BRL"), 5)
+            atualizacao = datetime.now().strftime("%d/%m/%Y - %H:%M:%S")
 
-        listaAtualizada.append(
-            (tupla[0], tupla[1], codigo, novoValor, atualizacao))
-    print(listaAtualizada)
+            listaAtualizada.append(
+                (tupla[0], tupla[1], codigo, novoValor, atualizacao))
+        print(listaAtualizada)
+
+        banco = BancoMoedas()
+
+        for moeda in listaAtualizada:
+            c = banco.conexao.cursor()
+            c.execute("update moedas set nome = '" + moeda[1] + "', sigla = '" + moeda[2] +
+                        "', cotacao = '" + str(moeda[3]) + "', horarioAtualizacao = '" + moeda[4] + "' where idMoeda = " + str(moeda[0]) + " ")
+            banco.conexao.commit()
+            c.close()
+        return "Moedas atualizadas com sucesso"
+    except:
+        return "Erro ao atualizar cotações"
+
 
     # atualizarPrecos()
 
@@ -114,7 +128,7 @@ euro = Moeda("Euro", "EUR", 5.52, "09/03/2022 - 00:32:15")
 listaMoedas = listarMoedas()
 print("Moedas: ", listaMoedas)
 
-atualizarCotacoes()
+print(atualizarCotacoes())
 
 
 camera = Produto("Celular Samsung S22", "799", "USD", "10", "3")
