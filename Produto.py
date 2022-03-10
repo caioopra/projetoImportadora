@@ -43,7 +43,7 @@ class Produto():
         banco = BancoProdutos()
         try:
             c = banco.conexao.cursor()
-            
+
             disponibilidade = self.getDisponibilidade()
             print(disponibilidade)
             self.qtdDisponivel = disponibilidade[0][1]
@@ -52,34 +52,41 @@ class Produto():
             if int(self.qtdDisponivel) - 1 == 0:
                 self.disponivel = "False"
             self.qtdDisponivel = int(self.qtdDisponivel) - 1
-            
-            query = """update produtos set qtdDisponivel = ?, disponivel = ? where produto = ?"""
-            c.execute(query, (self.qtdDisponivel, self.disponivel, self.produto, ))
 
-            banco.conexao.commit()
-            c.close()
+            if self.disponivel == "True":
+                query = """update produtos set qtdDisponivel = ?, disponivel = ? where produto = ?"""
+                c.execute(query, (self.qtdDisponivel,
+                                  self.disponivel, self.produto, ))
 
-            return f"{self.produto} comprado com sucesso!"
+                banco.conexao.commit()
+                c.close()
+
+                return f"{self.produto} comprado com sucesso!"
+            else:
+                return f"{self.produto} indisponível no momento"
         except:
             return f"Erro ao comprar {self.produto}"
 
     def adicionar(self, quantidade):
         banco = BancoProdutos()
         try:
+            atualizarCotacoes()
+
             disponibilidade = self.getDisponibilidade()
             print(disponibilidade)
             self.qtdDisponivel = disponibilidade[0][1]
             self.disponivel = disponibilidade[0][2]
 
             if quantidade != 0:
-                if self.disponivel == "False": 
+                if self.disponivel == "False":
                     self.disponivel = "True"
                 self.qtdDisponivel = int(self.qtdDisponivel) + quantidade
-            
+
                 c = banco.conexao.cursor()
 
                 query = """update produtos set qtdDisponivel = ?, disponivel = ? where produto = ?"""
-                c.execute(query, (str(self.qtdDisponivel), self.disponivel, self.produto, ))
+                c.execute(query, (str(self.qtdDisponivel),
+                          self.disponivel, self.produto, ))
                 banco.conexao.commit()
                 c.close()
 
@@ -87,10 +94,11 @@ class Produto():
         except:
             return "Erro ao atualizar a quantidade"
 
-    def getDisponibilidade(self):  # função que retorna a quantidade disponível no banco de dados e bool da disponibilidade
+    # função que retorna a quantidade disponível no banco de dados e bool da disponibilidade
+    def getDisponibilidade(self):
         try:
             banco = BancoProdutos()
-            
+
             c = banco.conexao.cursor()
             query = """select produto, qtdDisponivel, disponivel from produtos where produto = ?"""
             c.execute(query, (self.produto,))
@@ -101,6 +109,7 @@ class Produto():
             return disponibilidade
         except:
             return "Erro ao coletar disponibilidade"
+
 
 class Moeda():
     def __init__(self, nome="", sigla="", cotacao="", horarioAtualizacao="", idMoeda=""):
@@ -208,8 +217,6 @@ def atualizarPrecos():
     return listaProdutos
 
 
-# TODO: fazer as moedas atualizarem apenas de 30 em 30 min
-
 listaMoedas = listarMoedas()
 print("Moedas: ", listaMoedas)
 
@@ -219,5 +226,5 @@ celular = Produto("Celular Samsung S22", "799", "USD", "10", "3")
 camera = Produto("Camera Nikon D5000", "699", "EUR", "8", "2")
 celular2 = Produto("IPhone XR", "600", "USD", "10", "5")
 
-# print(celular2.comprar())
-# print(celular2.adicionar(3))
+print(camera.comprar())
+print(camera.adicionar(1))
