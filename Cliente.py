@@ -33,18 +33,19 @@ class Cliente():
 
     def atualizarCliente(self):
         banco = Banco()
-        try:
-            c = banco.conexao.cursor()
+        # try:
+        c = banco.conexao.cursor()
 
-            c.execute("update usuarios set nome = '" + self.nome + "', cpf = '" +
-                      self.cpf + "', nascimento = '" + self.nascimento + "', email = '" + self.email + "', senha = '" + self.senha + "', telefone = '" + self.telefone + "', logradouro = '" + self.endereco.logradouro + "', bairro = '" + self.endereco.bairro + "', cidade = '" + self.endereco.cidade + "', cep = '" + self.endereco.cep + "', estado = '" + self.endereco.estado + "', complemento = '" + self.endereco.complemento + "', numero = '" + self.endereco.numero + "' where idCliente = " + str(self.idCliente) + " ")
+        query = ("""update usuarios set nome = ?, cpf = ?, nascimento = ?, email = ?, senha = ?, telefone = ?, logradouro = ?, bairro = ?, cidade = ?, cep = ?, estado = ?, complemento = ?, numero = ? where email = ?""")
 
-            banco.conexao.commit()
-            c.close()
+        c.execute(query, (self.nome, self.cpf, self.nascimento, self.email, self.senha, self.telefone, self.endereco.logradouro, self.endereco.bairro, self.endereco.cidade, self.endereco.cep, self.endereco.estado, self.endereco.complemento, self.endereco.numero, self.email))
 
-            return "Cliente atualizado com sucesso"
-        except:
-            return "Erro ao atualizar cliente"
+        banco.conexao.commit()
+        c.close()
+
+        return "Cliente atualizado com sucesso"
+        # except:
+        #     return "Erro ao atualizar cliente"
 
     def deletarCliente(self):
         banco = Banco()
@@ -93,5 +94,37 @@ class Cliente():
                 return "Email ou senha incorretos, tente novamente"
             else:
                 return "Login efetuado com sucesso"
+        except:
+            return "Ocorreu um erro no login do cliente"
+
+    def selecionarCliente(self, emailLogado):
+        banco = Banco()
+
+        try:
+            c = banco.conexao.cursor()
+
+            query = """select * from usuarios where email = ?"""
+            c.execute(query, (emailLogado, ))
+            dados = c.fetchall()
+
+            for linha in dados:
+                self.idCliente = linha[0]
+                self.nome = linha[1]
+                self.cpf = linha[2]
+                self.nascimento = linha[3]
+                self.email = linha[4]
+                self.senha = linha[5]
+                self.telefone = linha[6]
+                self.logradouro = linha[7]
+                self.bairro = linha[8]
+                self.cidade = linha[9]
+                self.cep = linha[10]
+                self.estado = linha[11]
+                self.complemento = linha[12]
+                self.numero = linha[13]
+
+            c.close()
+
+            return "Cliente buscado  com sucesso"
         except:
             return "Ocorreu um erro no login do cliente"
