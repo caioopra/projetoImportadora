@@ -45,7 +45,7 @@ class Produto():
             c = banco.conexao.cursor()
 
             disponibilidade = self.getDisponibilidade()
-            print(disponibilidade)
+            # print(disponibilidade)
             self.qtdDisponivel = disponibilidade[0][1]
             self.disponivel = disponibilidade[0][2]
 
@@ -60,7 +60,7 @@ class Produto():
 
                 banco.conexao.commit()
                 c.close()
-
+            
                 return f"{self.produto} comprado com sucesso!"
             else:
                 return f"{self.produto} indisponível no momento"
@@ -73,7 +73,7 @@ class Produto():
             atualizarCotacoes()
 
             disponibilidade = self.getDisponibilidade()
-            print(disponibilidade)
+            # print(disponibilidade)
             self.qtdDisponivel = disponibilidade[0][1]
             self.disponivel = disponibilidade[0][2]
 
@@ -157,7 +157,7 @@ def atualizarCotacoes():
 
         for i in range(len(listaMoedas)):
             valoresAntigos[listaMoedas[i][2]] = listaMoedas[i][3]
-        print("Valores antigos: ", valoresAntigos)
+        # print("Valores antigos: ", valoresAntigos)
 
         listaAtualizada = []
         for tupla in listaMoedas:
@@ -167,7 +167,7 @@ def atualizarCotacoes():
 
             listaAtualizada.append(
                 (tupla[0], tupla[1], codigo, novoValor, atualizacao))
-        print("Lista atualizada: ", listaAtualizada)
+        # print("Lista atualizada: ", listaAtualizada)
 
         banco = BancoMoedas()
 
@@ -188,8 +188,8 @@ def atualizarCotacoes():
 
             analiseMoedas[sigla] = {"Porcentagem": round(
                 porcentagem, 2), "Variacao": round(variacao, 5)}
-            print(porcentagem, variacao)
-        print("Analise das moedas: ", analiseMoedas)
+            # print(porcentagem, variacao)
+        # print("Analise das moedas: ", analiseMoedas)
 
         listaProdutos = atualizarPrecos()
 
@@ -203,14 +203,14 @@ def atualizarPrecos():
 
     c = banco.conexao.cursor()
     c.execute("""select * from produtos""")
-    dados = c.fetchall()
     # cada linha dos dados é um produto diferente
+    dados = c.fetchall()
 
     listaProdutos = []
     for linha in dados:
         produto = Produto(linha[1], linha[2], linha[3], linha[4], linha[6])
         listaProdutos.append(produto)
-    print("Lista produtos: ", listaProdutos)
+    # print("Lista produtos: ", listaProdutos)
 
     c.close()
 
@@ -218,13 +218,14 @@ def atualizarPrecos():
 
 
 listaMoedas = listarMoedas()
-print("Moedas: ", listaMoedas)
+# print("Moedas: ", listaMoedas)
 
 # print(atualizarCotacoes()[0])
 
-celular = Produto("Celular Samsung S22", "799", "USD", "10", "3")
-camera = Produto("Camera Nikon D5000", "699", "EUR", "8", "2")
-celular2 = Produto("IPhone XR", "600", "USD", "10", "5")
+# celular = Produto("Celular Samsung S22", "799", "USD", "10", "3")
+# camera = Produto("Camera Nikon D5000", "699", "EUR", "8", "2")
+# controle = Produto("Controle Dualshock 4", "45", "EUR", "5", "4")
 
-print(camera.comprar())
-print(camera.adicionar(1))
+
+# print(camera.comprar())
+# print(camera.adicionar(1))

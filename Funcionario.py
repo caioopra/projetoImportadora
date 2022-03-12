@@ -14,7 +14,7 @@ class Funcionario():
         self.idFuncionario = idFuncionario
 
     # TODO: usar essa função dentro do admin para cadastrar um funcionario
-    # def cadastrarCliente(self):
+    # def cadastrarFuncionario(self):
     #     banco = BancoFuncionarios()
 
     #     try:

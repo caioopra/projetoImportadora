@@ -1,4 +1,4 @@
-# Bibliotecas necessárias
+## Bibliotecas necessárias
 
 - forex_python
 ```
