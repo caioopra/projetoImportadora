@@ -3,6 +3,7 @@ from Administrador import Administrador
 from Cliente import Cliente
 from Endereco import Endereco
 from Funcionario import Funcionario
+from ClienteFuncionario import ClienteFuncionario
 from Produto import atualizarCotacoes
 
 
@@ -478,7 +479,7 @@ class CadastroCliente():
             self.master.mainloop()
 
 
-class FuncionarioLogado(): # TODO: WIP
+class FuncionarioLogado():  # TODO: WIP
     def __init__(self, master=None, emailLogado=""):
         self.master = master
         self.emailLogado = emailLogado
@@ -531,10 +532,10 @@ class FuncionarioLogado(): # TODO: WIP
         funcionario = Funcionario()
 
         if funcionario.verificarCliente(self.emailLogado) == "Cliente":
-            centralizarJanela(self.master, 1200, 600)
+            centralizarJanela(self.master, 1600, 600)
             FuncionarioClienteProdutos(self.master, self.emailLogado)
         else:
-            centralizarJanela(self.master, 1000, 600)
+            centralizarJanela(self.master, 1200, 600)
             FuncionarioProdutos(self.master, self.emailLogado)
         self.master.mainloop()
 
@@ -553,16 +554,449 @@ class FuncionarioLogado(): # TODO: WIP
         self.master.mainloop()
 
 
-class FuncionarioProdutos():  # TODO: implementar
+class FuncionarioProdutos():
     def __init__(self, master=None, emailLogado=""):
         self.master = master
         self.emailLogado = emailLogado
 
+        self.container1 = Frame(master)
+        self.container1["pady"] = 10
+        self.container1.pack()
 
-class FuncionarioClienteProdutos(): # TODO: implementar
+        self.container2 = Frame(master)
+        self.container2["padx"] = 20
+        self.container2["pady"] = 5
+        self.container2.pack()
+
+        self.container3 = Frame(master)
+        self.container3["padx"] = 20
+        self.container3["pady"] = 5
+        self.container3.pack()
+
+        self.container4 = Frame(master)
+        self.container4["padx"] = 20
+        self.container4["pady"] = 5
+        self.container4.pack()
+
+        self.container5 = Frame(master)
+        self.container5["padx"] = 20
+        self.container5["pady"] = 5
+        self.container5.pack()
+
+        self.container6 = Frame(master)
+        self.container6["padx"] = 20
+        self.container6["pady"] = 5
+        self.container6.pack()
+
+        self.container7 = Frame(master)
+        self.container7["padx"] = 20
+        self.container7["pady"] = 5
+        self.container7.pack()
+
+        self.container8 = Frame(master)
+        self.container8["padx"] = 20
+        self.container8["pady"] = 5
+        self.container8.pack()
+
+        # conteudo
+        self.titulo = Label(self.container1, text="Produtos", font=(
+            "Century Gothic", "14", "bold"), width=65)
+        self.titulo.pack(side=LEFT, padx=30)
+
+        self.btnVoltar = Button(
+            self.container1, text="Voltar", font=fontePadrao, width=15)
+        self.btnVoltar["command"] = self.voltarPagina
+        self.btnVoltar.pack(side=LEFT)
+
+        # labels
+        self.lblNome = Label(self.container2, text="Produto", font=(
+            "Century Gothic", "12", "bold"), width=20)
+        self.lblNome.pack(side=LEFT, padx=5, pady=25)
+
+        self.lblQuantidade = Label(self.container2, text="Quantidade", font=(
+            "Century Gothic", "12", "bold"), width=20)
+        self.lblQuantidade.pack(side=LEFT, padx=5, pady=10)
+
+        self.lblPreco = Label(self.container2, text="Preço (R$)", font=(
+            "Century Gothic", "12", "bold"), width=20)
+        self.lblPreco.pack(side=LEFT, padx=5, pady=15)
+
+        self.lblMoeda = Label(self.container2, text="Moeda", font=(
+            "Century Gothic", "12", "bold"), width=20)
+        self.lblMoeda.pack(side=LEFT, padx=5, pady=15)
+
+        self.lblRemover = Label(self.container2, text="Remover 1 ",
+                                font=("Century Gothic", "12", "bold"), width=20)
+        self.lblRemover.pack(side=LEFT, padx=5, pady=15)
+
+        self.lblAdicionar = Label(self.container2, text="Adicionar 1 ",
+                                  font=("Century Gothic", "12", "bold"), width=20)
+        self.lblAdicionar.pack(side=LEFT, padx=5, pady=15)
+
+        # lista dos produtos disponiveis
+        listaProdutos = atualizarCotacoes()[1]
+        print("Lista de todos produtos: ", listaProdutos)
+
+        if len(listaProdutos) % 4 == 0:
+            quantidadeListas = len(listaProdutos) / 4
+        else:
+            quantidadeListas = (len(listaProdutos) // 4) + 1
+
+        # cria matriz com listas de até 4 produtos em cada linha
+        self.matrizProdutos = [0] * quantidadeListas
+        for i in range(quantidadeListas):
+            self.matrizProdutos[i] = listaProdutos[(4 * i):(4 * i + 4)]
+
+        print(self.matrizProdutos)
+        # TODO: criar tratamento para os produtos indisponiveis
+
+        self.listaContainers = [self.container3,
+                                self.container4, self.container5, self.container6]
+        # mostra na tela os produtos daquela linha da matriz
+        self.paginaAtual = 0
+        self.objetosMostrados = self.mostrarProdutos(
+            self.matrizProdutos[self.paginaAtual])
+
+        # botoes de navegacao entre as paginas
+        self.btnProxima = Button(
+            self.container7, text="Próxima\nPágina", font=fontePadrao, width=16)
+        self.btnProxima["command"] = lambda: self.paginaSeguinte(
+            self.matrizProdutos[self.paginaAtual + 1], self.objetosMostrados)
+        self.btnProxima.pack(side=RIGHT, padx=15)
+
+        self.btnAnterior = Button(
+            self.container7, text="Página\nAnterior", font=fontePadrao, width=16)
+        self.btnAnterior["command"] = lambda: self.paginaAnterior(
+            self.matrizProdutos[self.paginaAtual - 1], self.objetosMostrados)
+
+        if self.paginaAtual == 0:
+            self.btnAnterior["state"] = DISABLED
+        else:
+            self.btnAnterior["state"] = NORMAL
+        self.btnAnterior.pack(side=RIGHT, padx=15)
+
+    def mostrarProdutos(self, lista):
+        listaObjetosMostrados = []
+
+        for j in range(len(lista)):  # coloca os elementos da mesma lista na tela (max = 4)
+            self.labelNomeProduto = Label(
+                self.listaContainers[j], text=lista[j].produto, font=fontePadrao, width=20)
+            self.labelNomeProduto.pack(side=LEFT, pady=15)
+
+            self.labelQuantidade = Label(
+                self.listaContainers[j], text=lista[j].qtdDisponivel, font=fontePadrao, width=20)
+            self.labelQuantidade.pack(side=LEFT, padx=5, pady=10)
+
+            self.labelValorVenda = Label(
+                self.listaContainers[j], text=f"R${lista[j].valorVenda}", font=fontePadrao, width=25)
+            self.labelValorVenda.pack(side=LEFT, padx=5, pady=15)
+
+            self.labelMoeda = Label(
+                self.listaContainers[j], text=lista[j].moeda, font=fontePadrao, width=25)
+            self.labelMoeda.pack(side=LEFT, padx=5, pady=15)
+
+            self.btnRemover = Button(
+                self.listaContainers[j], text="Remover", font=fontePadrao, width=20)
+            self.btnRemover["command"] = lista[j].remover
+            self.btnRemover.pack(side=LEFT, padx=5, pady=15)
+
+            self.btnAdicionar = Button(
+                self.listaContainers[j], text="Adicionar", font=fontePadrao, width=20)
+            self.btnAdicionar["command"] = lista[j].adicionar
+            self.btnAdicionar.pack(side=LEFT, padx=15, pady=15)
+
+            listaObjetosMostrados.append(self.labelNomeProduto)
+            listaObjetosMostrados.append(self.labelQuantidade)
+            listaObjetosMostrados.append(self.labelValorVenda)
+            listaObjetosMostrados.append(self.labelMoeda)
+            listaObjetosMostrados.append(self.btnRemover)
+            listaObjetosMostrados.append(self.btnAdicionar)
+
+        self.objetosMostrados = listaObjetosMostrados.copy()
+        return listaObjetosMostrados
+
+    def removerDaTela(self, lista):
+        for objeto in lista:
+            objeto.destroy()
+
+    def paginaSeguinte(self, listaProd, listaRemover):
+        self.removerDaTela(listaRemover)
+
+        if not (self.paginaAtual + 1 > len(self.matrizProdutos) - 1):
+            self.paginaAtual += 1
+            self.mostrarProdutos(listaProd)
+
+        if self.paginaAtual == (len(self.matrizProdutos) - 1):
+            self.btnProxima["state"] = DISABLED
+        else:
+            self.btnProxima["state"] = NORMAL
+
+        if self.paginaAtual == 0:
+            self.btnAnterior["state"] = DISABLED
+        else:
+            self.btnAnterior["state"] = NORMAL
+
+    def paginaAnterior(self, listaProd, listaRemover):
+        self.removerDaTela(listaRemover)
+
+        if self.paginaAtual - 1 >= 0:
+            self.paginaAtual -= 1
+            self.mostrarProdutos(listaProd)
+
+        if self.paginaAtual == 0:
+            self.btnAnterior["state"] = DISABLED
+        else:
+            self.btnAnterior["state"] = NORMAL
+
+        if self.paginaAtual == (len(self.matrizProdutos) - 1):
+            self.btnProxima["state"] = DISABLED
+        else:
+            self.btnProxima["state"] = NORMAL
+
+    def voltarPagina(self):
+        self.master.destroy()
+        self.master = Tk()
+        self.master.title("Cliente")
+        centralizarJanela(self.master, 600, 200)
+        ClienteLogado(self.master, self.emailLogado)
+
+
+class FuncionarioClienteProdutos(): 
     def __init__(self, master=None, emailLogado=""):
         self.master = master
         self.emailLogado = emailLogado
+
+        self.container1 = Frame(master)
+        self.container1["pady"] = 10
+        self.container1.pack()
+
+        self.container2 = Frame(master)
+        self.container2["padx"] = 20
+        self.container2["pady"] = 5
+        self.container2.pack()
+
+        self.container3 = Frame(master)
+        self.container3["padx"] = 20
+        self.container3["pady"] = 5
+        self.container3.pack()
+
+        self.container4 = Frame(master)
+        self.container4["padx"] = 20
+        self.container4["pady"] = 5
+        self.container4.pack()
+
+        self.container5 = Frame(master)
+        self.container5["padx"] = 20
+        self.container5["pady"] = 5
+        self.container5.pack()
+
+        self.container6 = Frame(master)
+        self.container6["padx"] = 20
+        self.container6["pady"] = 5
+        self.container6.pack()
+
+        self.container7 = Frame(master)
+        self.container7["padx"] = 20
+        self.container7["pady"] = 5
+        self.container7.pack()
+
+        self.container8 = Frame(master)
+        self.container8["padx"] = 20
+        self.container8["pady"] = 5
+        self.container8.pack()
+
+        # conteudo
+        self.titulo = Label(self.container1, text="Produtos", font=(
+            "Century Gothic", "14", "bold"), width=65)
+        self.titulo.pack(side=LEFT, padx=30)
+
+        self.btnVoltar = Button(
+            self.container1, text="Voltar", font=fontePadrao, width=15)
+        self.btnVoltar["command"] = self.voltarPagina
+        self.btnVoltar.pack(side=LEFT)
+
+        # labels
+        self.lblNome = Label(self.container2, text="Produto", font=(
+            "Century Gothic", "12", "bold"), width=20)
+        self.lblNome.pack(side=LEFT, padx=5, pady=25)
+
+        self.lblQuantidade = Label(self.container2, text="Quantidade", font=(
+            "Century Gothic", "12", "bold"), width=20)
+        self.lblQuantidade.pack(side=LEFT, padx=5, pady=10)
+
+        self.lblPreco = Label(self.container2, text="Preço (R$)", font=(
+            "Century Gothic", "12", "bold"), width=20)
+        self.lblPreco.pack(side=LEFT, padx=5, pady=15)
+
+        self.lblMoeda = Label(self.container2, text="Moeda", font=(
+            "Century Gothic", "12", "bold"), width=20)
+        self.lblMoeda.pack(side=LEFT, padx=5, pady=15)
+
+        self.lblRemover = Label(self.container2, text="Remover 1 ",
+                                font=("Century Gothic", "12", "bold"), width=20)
+        self.lblRemover.pack(side=LEFT, padx=5, pady=15)
+
+        self.lblAdicionar = Label(self.container2, text="Adicionar 1 ",
+                                  font=("Century Gothic", "12", "bold"), width=20)
+        self.lblAdicionar.pack(side=LEFT, padx=5, pady=15)
+
+        self.lblComprarDesc = Label(self.container2, text="Valor com desconto", font=(
+            "Century Gothic", "12", "bold"), width=20)
+        self.lblComprarDesc.pack(side=LEFT, padx=5, pady=15)
+
+        self.espacoVazio = Label(
+            self.container2, text=" ", font=fontePadrao, width=150)
+        self.espacoVazio.pack(side=LEFT, padx=5, pady=15)
+
+        # lista dos produtos disponiveis
+        listaProdutos = atualizarCotacoes()[1]
+        print("Lista de todos produtos: ", listaProdutos)
+
+        if len(listaProdutos) % 4 == 0:
+            quantidadeListas = len(listaProdutos) / 4
+        else:
+            quantidadeListas = (len(listaProdutos) // 4) + 1
+
+        # cria matriz com listas de até 4 produtos em cada linha
+        self.matrizProdutos = [0] * quantidadeListas
+        for i in range(quantidadeListas):
+            self.matrizProdutos[i] = listaProdutos[(4 * i):(4 * i + 4)]
+
+        print(self.matrizProdutos)
+        # TODO: criar tratamento para os produtos indisponiveis
+
+        self.listaContainers = [self.container3,
+                                self.container4, self.container5, self.container6]
+        # mostra na tela os produtos daquela linha da matriz
+        self.paginaAtual = 0
+        self.objetosMostrados = self.mostrarProdutos(
+            self.matrizProdutos[self.paginaAtual])
+
+        # botoes de navegacao entre as paginas
+        self.btnProxima = Button(
+            self.container7, text="Próxima\nPágina", font=fontePadrao, width=16)
+        self.btnProxima["command"] = lambda: self.paginaSeguinte(
+            self.matrizProdutos[self.paginaAtual + 1], self.objetosMostrados)
+        self.btnProxima.pack(side=RIGHT, padx=15)
+
+        self.btnAnterior = Button(
+            self.container7, text="Página\nAnterior", font=fontePadrao, width=16)
+        self.btnAnterior["command"] = lambda: self.paginaAnterior(
+            self.matrizProdutos[self.paginaAtual - 1], self.objetosMostrados)
+
+        if self.paginaAtual == 0:
+            self.btnAnterior["state"] = DISABLED
+        else:
+            self.btnAnterior["state"] = NORMAL
+        self.btnAnterior.pack(side=RIGHT, padx=15)
+
+    def mostrarProdutos(self, lista):
+        listaObjetosMostrados = []
+
+        for j in range(len(lista)):  # coloca os elementos da mesma lista na tela (max = 4)
+            self.labelNomeProduto = Label(
+                self.listaContainers[j], text=lista[j].produto, font=fontePadrao, width=20)
+            self.labelNomeProduto.pack(side=LEFT, pady=15)
+
+            self.labelQuantidade = Label(
+                self.listaContainers[j], text=lista[j].qtdDisponivel, font=fontePadrao, width=20)
+            self.labelQuantidade.pack(side=LEFT, padx=5, pady=10)
+
+            self.labelValorVenda = Label(
+                self.listaContainers[j], text=f"R${lista[j].valorVenda}", font=fontePadrao, width=25)
+            self.labelValorVenda.pack(side=LEFT, padx=5, pady=15)
+
+            self.labelMoeda = Label(
+                self.listaContainers[j], text=lista[j].moeda, font=fontePadrao, width=25)
+            self.labelMoeda.pack(side=LEFT, padx=5, pady=15)
+
+            self.btnRemover = Button(
+                self.listaContainers[j], text="Remover", font=fontePadrao, width=20)
+            self.btnRemover["command"] = lista[j].remover
+            self.btnRemover.pack(side=LEFT, padx=5, pady=15)
+
+            self.btnAdicionar = Button(
+                self.listaContainers[j], text="Adicionar", font=fontePadrao, width=20)
+            self.btnAdicionar["command"] = lista[j].adicionar
+            self.btnAdicionar.pack(side=LEFT, padx=15, pady=15)
+
+            desconto = self.buscarDesconto(self.emailLogado)
+            valorComDesconto = (100 - desconto) / 100 * lista[j].valorVenda
+
+            self.labelDesconto = Label(
+                self.listaContainers[j], text=f"R${round(valorComDesconto, 2)}", font=fontePadrao, width=20)
+            self.labelDesconto.pack(side=LEFT, padx=5)
+
+            self.btnComprar = Button(self.listaContainers[j], text="Comprar!", font=fontePadrao, width=40)
+            self.btnComprar["command"] = lista[j].comprarComDesconto
+            self.btnComprar.pack(side=LEFT, padx=5, pady=5)
+
+            listaObjetosMostrados.append(self.labelNomeProduto)
+            listaObjetosMostrados.append(self.labelQuantidade)
+            listaObjetosMostrados.append(self.labelValorVenda)
+            listaObjetosMostrados.append(self.labelMoeda)
+            listaObjetosMostrados.append(self.btnRemover)
+            listaObjetosMostrados.append(self.btnAdicionar)
+            listaObjetosMostrados.append(self.labelDesconto)
+            listaObjetosMostrados.append(self.btnComprar)
+
+        self.objetosMostrados = listaObjetosMostrados.copy()
+        return listaObjetosMostrados
+
+    def removerDaTela(self, lista):
+        for objeto in lista:
+            objeto.destroy()
+
+    def paginaSeguinte(self, listaProd, listaRemover):
+        self.removerDaTela(listaRemover)
+
+        if not (self.paginaAtual + 1 > len(self.matrizProdutos) - 1):
+            self.paginaAtual += 1
+            self.mostrarProdutos(listaProd)
+
+        if self.paginaAtual == (len(self.matrizProdutos) - 1):
+            self.btnProxima["state"] = DISABLED
+        else:
+            self.btnProxima["state"] = NORMAL
+
+        if self.paginaAtual == 0:
+            self.btnAnterior["state"] = DISABLED
+        else:
+            self.btnAnterior["state"] = NORMAL
+
+    def paginaAnterior(self, listaProd, listaRemover):
+        self.removerDaTela(listaRemover)
+
+        if self.paginaAtual - 1 >= 0:
+            self.paginaAtual -= 1
+            self.mostrarProdutos(listaProd)
+
+        if self.paginaAtual == 0:
+            self.btnAnterior["state"] = DISABLED
+        else:
+            self.btnAnterior["state"] = NORMAL
+
+        if self.paginaAtual == (len(self.matrizProdutos) - 1):
+            self.btnProxima["state"] = DISABLED
+        else:
+            self.btnProxima["state"] = NORMAL
+
+    def voltarPagina(self):
+        self.master.destroy()
+        self.master = Tk()
+        self.master.title("Cliente")
+        centralizarJanela(self.master, 600, 200)
+        ClienteLogado(self.master, self.emailLogado)
+
+    # retorna quantos % de desconto aquele funcionario possui
+    def buscarDesconto(self, emailLogado):
+        clienteF = ClienteFuncionario()
+
+        clienteF.getDados(self.emailLogado)
+        desconto = clienteF.desconto
+
+        return desconto
+
 
 class FuncionarioConfigurarConta():
     def __init__(self, master=None, emailLogado=""):

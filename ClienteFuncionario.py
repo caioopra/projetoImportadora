@@ -4,7 +4,7 @@ from BancoFuncionarios import BancoClientesFuncionarios
 
 
 class ClienteFuncionario():
-    def __init__(self, funcionario, desconto, logradouro, bairro, cidade, cep, estado, complemento, numero):
+    def __init__(self, funcionario="", desconto="", logradouro="", bairro="", cidade="", cep="", estado="", complemento="", numero=""):
         self.funcionario = funcionario
         self.desconto = desconto
         self.endereco = Endereco(
@@ -27,5 +27,33 @@ class ClienteFuncionario():
             return "Cliente cadastrado com sucesso!"
         except:
             return "Erro no cadastro do cliente"
+
+    def getDados(self, emailLogado):
+        banco = BancoClientesFuncionarios()
+
+        try:
+            c = banco.conexao.cursor()
+
+            query = """select * from usuarios where funcionario = ?"""
+            c.execute(query, (emailLogado,))
+            dados = c.fetchall()
+
+            for linha in dados:
+                self.idClienteFuncionario = linha[0]
+                self.funcionario = linha[1]
+                self.desconto = linha[2]
+                self.logradouro = linha[3]
+                self.bairro = linha[4]
+                self.cidade = linha[5]
+                self.cep = linha[6]
+                self.estado = linha[7]
+                self.complemento = linha[8]
+                self.numero = linha[9]
+            
+            c.close()
+
+            return "Desconto encontrado"
+        except:
+            return "Erro ao buscar desconto"
 
 

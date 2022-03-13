@@ -67,7 +67,7 @@ class Produto():
         except:
             return f"Erro ao comprar {self.produto}"
 
-    def adicionar(self, quantidade):
+    def adicionar(self):
         banco = BancoProdutos()
         try:
             atualizarCotacoes()
@@ -77,20 +77,50 @@ class Produto():
             self.qtdDisponivel = disponibilidade[0][1]
             self.disponivel = disponibilidade[0][2]
 
-            if quantidade != 0:
-                if self.disponivel == "False":
-                    self.disponivel = "True"
-                self.qtdDisponivel = int(self.qtdDisponivel) + quantidade
 
-                c = banco.conexao.cursor()
+            if self.disponivel == "False":
+                self.disponivel = "True"
+            self.qtdDisponivel = int(self.qtdDisponivel) + 1
 
-                query = """update produtos set qtdDisponivel = ?, disponivel = ? where produto = ?"""
-                c.execute(query, (str(self.qtdDisponivel),
-                          self.disponivel, self.produto, ))
-                banco.conexao.commit()
-                c.close()
+            c = banco.conexao.cursor()
 
-                return "Quantidade atualizada com sucesso"
+            query = """update produtos set qtdDisponivel = ?, disponivel = ? where produto = ?"""
+            c.execute(query, (str(self.qtdDisponivel),
+                        self.disponivel, self.produto, ))
+            banco.conexao.commit()
+            c.close()
+
+            return "Quantidade atualizada com sucesso"
+        except:
+            return "Erro ao atualizar a quantidade"
+
+    def remover(self):
+        banco = BancoProdutos()
+        try:
+            atualizarCotacoes()
+
+            disponibilidade = self.getDisponibilidade()
+            # print(disponibilidade)
+            self.qtdDisponivel = disponibilidade[0][1]
+            self.disponivel = disponibilidade[0][2]
+
+
+            if self.disponivel == "False":
+                return
+            else:
+                self.qtdDisponivel = int(self.qtdDisponivel) - 1
+                if self.qtdDisponivel == 0:
+                    self.disponivel = "False"
+
+            c = banco.conexao.cursor()
+
+            query = """update produtos set qtdDisponivel = ?, disponivel = ? where produto = ?"""
+            c.execute(query, (str(self.qtdDisponivel),
+                        self.disponivel, self.produto, ))
+            banco.conexao.commit()
+            c.close()
+
+            return "Quantidade atualizada com sucesso"
         except:
             return "Erro ao atualizar a quantidade"
 
@@ -109,6 +139,33 @@ class Produto():
             return disponibilidade
         except:
             return "Erro ao coletar disponibilidade"
+
+    def comprarComDesconto(self, desconto):
+        banco = BancoProdutos()
+        try:
+            c = banco.conexao.cursor()
+
+            disponibilidade = self.getDisponibilidade()
+            self.qtdDisponivel = disponibilidade[0][1]
+            self.disponivel = disponibilidade[0][2]
+
+            if int(self.qtdDisponivel) - 1 == 0:
+                self.disponivel = "False"
+            self.qtdDisponivel = int(self.qtdDisponivel) - 1
+
+            if self.disponivel == "True":
+                query = """update produtos set qtdDisponivel = ?, disponivel = ? where produto = ?"""
+                c.execute(query, (self.qtdDisponivel,
+                                  self.disponivel, self.produto, ))
+
+                banco.conexao.commit()
+                c.close()
+            
+                return f"{self.produto} comprado com sucesso!"
+            else:
+                return f"{self.produto} indisponível no momento"
+        except:
+            return f"Erro ao comprar {self.produto}"
 
 
 class Moeda():

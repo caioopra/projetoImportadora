@@ -74,8 +74,9 @@ class Funcionario():
         emailC = c.fetchall()
         c.close()
 
-        print(emailC[0][0] == email)
-        if emailC[0][0] == email:
+        if emailC == []:
+            return "Não é cliente"
+        elif emailC[0][0] == email:
             return "Cliente"
         else:
             return "Não é cliente"
