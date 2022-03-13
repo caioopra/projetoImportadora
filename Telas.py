@@ -1,4 +1,5 @@
 from tkinter import *
+from Administrador import Administrador
 from Cliente import Cliente
 from Endereco import Endereco
 from Funcionario import Funcionario
@@ -116,13 +117,35 @@ class LoginFuncionario():
         PaginaInicial(self.master)
         self.master.mainloop()
 
-    def loginFuncionario(self):
+    def loginFuncionario(self): # TODO: terminar essa função
         funcionario = Funcionario()
+        administrador = Administrador()
 
         email = self.txtEmail.get()
         senha = self.txtSenha.get()
 
         self.lblMsg["text"] = funcionario.login(email, senha)
+
+        if funcionario.login(email, senha) == "Login efetuado com sucesso":
+            self.master.destroy()
+            self.master = Tk()
+            self.master.title("Funcionário")
+            centralizarJanela(self.master, 600, 200)
+            FuncionarioLogado(self.master, email)
+            self.master.mainloop()
+        
+        # nesse caso, não tem aquele email como funcionario, pode ser um admin
+        if funcionario.login(email, senha) != "Conta não encontrada" :
+            self.lblMsg["text"] = administrador.login(email, senha)
+
+            if administrador.login(email, senha) == "Login efetuado com sucesso":
+                self.master.destroy()
+                self.master = Tk()
+                self.master.title("Administrador")
+                centralizarJanela(self.master, 600, 300)
+                AdministradorLogado(self.master, email)
+                self.master.mainloop()
+
 
 
 class ContaCliente():
@@ -457,10 +480,76 @@ class CadastroCliente():
 
 
 class FuncionarioLogado():
-    def __init__(self, master=None):
+    def __init__(self, master=None, emailLogado=""):
         self.master = master
-        # TODO: continuar a criar a tela
-        # botões: conta, produtos, ?moedas?
+
+        self.container1 = Frame(master, padx=30, pady=15)
+        self.container1.pack()
+
+        self.container2 = Frame(master, padx=40, pady=25)
+        self.container2.pack()
+
+        self.container3 = Frame(master, padx=35, pady=5)
+        self.container3.pack()
+
+        self.container4 = Frame(master, padx=70, pady=5)
+        self.container4.pack()
+
+        self.master = master
+        self.emailLogado = emailLogado
+
+        # conteudo da pagina
+        self.titulo = Label(self.container1, text="Selecione a opção", font=(
+            "Century Gothic", "13", "bold"))
+        self.titulo.pack(side=LEFT, padx=28)
+
+        self.btnlogout = Button(
+            self.container1, text="Sair", font=fontePadrao, width=11)
+        self.btnlogout["command"] = self.logout
+        self.btnlogout.pack(side=LEFT)
+
+        self.btnProdutos = Button(self.container2, text="Produtos", font=(
+            "Century Gothic", "12", "bold"), width=13, height=5)
+        self.btnProdutos["command"] = self.acessarProdutos
+        self.btnProdutos.pack(side=LEFT, padx=20)
+
+        self.btnConta = Button(self.container2, text="Conta", font=(
+            "Century Gothic", "12", "bold"), width=13, height=5)
+        self.btnConta["command"] = self.acessarConta
+        self.btnConta.pack(side=LEFT)
+
+    def logout(self):
+        self.master.destroy()
+        self.master = Tk()
+        self.master.title("Importadora")
+        centralizarJanela(self.master, 600, 200)
+        PaginaInicial(self.master)
+        self.master.mainloop()
+
+    def acessarProdutos(self):
+        self.master.destroy()
+        self.master = Tk()
+        self.master.title("Produtos disponíveis")
+        centralizarJanela(self.master, 1000, 600)
+        ClienteProdutosDisponiveis(self.master, self.emailLogado)
+        self.master.mainloop()
+
+    def acessarConta(self):
+        self.master.destroy()
+        self.master = Tk()
+        self.master.title("Configurações da conta")
+        centralizarJanela(self.master, 650, 400)
+        ClienteConfigurarConta(self.master, self.emailLogado)
+        print(self.emailLogado)
+        self.master.mainloop()
+        
+
+
+class AdministradorLogado(): # TODO: implementar/copiar
+    def __init__(self, master=None, emailLogado=""):
+        self.master = master
+        self.emailLogado = emailLogado
+
 
 
 class LoginCliente():

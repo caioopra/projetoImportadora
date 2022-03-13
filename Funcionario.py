@@ -54,9 +54,9 @@ class Funcionario():
 
             c.close()
             if self.email == "":
-                return "Conta não encontrada"
+                return "Conta funcionario não encontrada"
             elif not(email == self.email and senha == self.senha):
-                return "Email ou senha incorretos, tente novamente"
+                return "Email ou senha funcionario incorretos, tente novamente"
             else:
                 print(dados)
                 return "Login efetuado com sucesso"
