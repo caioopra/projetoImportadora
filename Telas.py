@@ -479,7 +479,7 @@ class CadastroCliente():
             self.master.mainloop()
 
 
-class FuncionarioLogado():  # TODO: WIP
+class FuncionarioLogado():
     def __init__(self, master=None, emailLogado=""):
         self.master = master
         self.emailLogado = emailLogado
@@ -549,7 +549,7 @@ class FuncionarioLogado():  # TODO: WIP
             centralizarJanela(self.master, 650, 400)
             FuncionarioClienteConfigurar(self.master, self.emailLogado)
         else:
-            centralizarJanela(self.master, 500, 300)
+            centralizarJanela(self.master, 500, 400)
             FuncionarioConfigurarConta(self.master, self.emailLogado)
         self.master.mainloop()
 
@@ -1128,85 +1128,15 @@ class FuncionarioConfigurarConta():
         # botao de atualizacao
         self.btnAtualizar = Button(
             self.container8, text="Atualizar", font=fontePadrao, width=12)
-        self.btnAtualizar["command"] = self.atualizarClientePagina
+        self.btnAtualizar["command"] = self.atualizarFuncionarioPagina
         self.btnAtualizar.pack(side=LEFT, padx=81)
-
-        # input logradouro
-        self.lblLogradouro = Label(
-            self.container2, text="Logradouro: ", font=fontePadrao, width=10)
-        self.lblLogradouro.pack(side=LEFT, padx=34)
-
-        self.txtLogradouro = Entry(self.container2)
-        self.txtLogradouro["width"] = 25
-        self.txtLogradouro["font"] = fontePadrao
-        self.txtLogradouro.pack(side=LEFT)
-
-        # input bairro
-        self.lblBairro = Label(
-            self.container3, text="Bairro: ", font=fontePadrao, width=10)
-        self.lblBairro.pack(side=LEFT, padx=34)
-
-        self.txtBairro = Entry(self.container3)
-        self.txtBairro["width"] = 25
-        self.txtBairro["font"] = fontePadrao
-        self.txtBairro.pack(side=LEFT)
-
-        # input cidade
-        self.lblCidade = Label(
-            self.container4, text="Cidade: ", font=fontePadrao, width=10)
-        self.lblCidade.pack(side=LEFT, padx=34)
-
-        self.txtCidade = Entry(self.container4)
-        self.txtCidade["width"] = 25
-        self.txtCidade["font"] = fontePadrao
-        self.txtCidade.pack(side=LEFT)
-
-        # input cep
-        self.lblCep = Label(
-            self.container5, text="CEP: ", font=fontePadrao, width=11)
-        self.lblCep.pack(side=LEFT, padx=30)
-
-        self.txtCep = Entry(self.container5)
-        self.txtCep["width"] = 25
-        self.txtCep["font"] = fontePadrao
-        self.txtCep.pack(side=LEFT)
-
-        # input estado
-        self.lblEstado = Label(
-            self.container6, text="Estado: ", font=fontePadrao, width=10)
-        self.lblEstado.pack(side=LEFT, padx=34)
-
-        self.txtEstado = Entry(self.container6)
-        self.txtEstado["width"] = 25
-        self.txtEstado["font"] = fontePadrao
-        self.txtEstado.pack(side=LEFT)
-
-        # input complemento
-        self.lblComplemento = Label(
-            self.container7, text="Complemento: ", font=fontePadrao, width=12)
-        self.lblComplemento.pack(side=LEFT, padx=27)
-
-        self.txtComplemento = Entry(self.container7)
-        self.txtComplemento["width"] = 25
-        self.txtComplemento["font"] = fontePadrao
-        self.txtComplemento.pack(side=LEFT)
-
-        # input numero
-        self.lblNumero = Label(
-            self.container8, text="Numero: ", font=fontePadrao, width=18)
-        self.lblNumero.pack(side=LEFT)
-
-        self.txtNumero = Entry(self.container8)
-        self.txtNumero["width"] = 25
-        self.txtNumero["font"] = fontePadrao
-        self.txtNumero.pack(side=LEFT)
 
         # mensagem de sucesso/erro
         self.lblMsg = Label(self.container9, text="",
                             font=("Century Gothic", "11", "italic"))
         self.lblMsg.pack()
 
-        self.buscarCliente()
+        self.buscarFuncionario()
 
     def voltarPagina(self):
         self.master.destroy()
@@ -1216,54 +1146,38 @@ class FuncionarioConfigurarConta():
         FuncionarioLogado(self.master, self.emailLogado)
         self.master.mainloop()
 
-    def buscarCliente(self):
-        cliente = Cliente()
+    def buscarFuncionario(self):
+        funcionario = Funcionario()
 
-        cliente.selecionarCliente(self.emailLogado)
+        funcionario.selecionarFuncionario(self.emailLogado)
 
-        self.txtNome.insert(INSERT, cliente.nome)
-        self.txtCpf.insert(INSERT, cliente.cpf)
-        nascimento = cliente.nascimento.split("-")
+        self.txtNome.insert(INSERT, funcionario.nome)
+        self.txtCpf.insert(INSERT, funcionario.cpf)
+        nascimento = funcionario.nascimento.split("-")
         self.txtDia.insert(INSERT, nascimento[0])
         self.txtMes.insert(INSERT, nascimento[1])
         self.txtAno.insert(INSERT, nascimento[2])
-        self.txtSenha.insert(INSERT, cliente.senha)
-        self.txtTelefone.insert(INSERT, cliente.telefone)
-        self.txtLogradouro.insert(INSERT, cliente.logradouro)
-        self.txtBairro.insert(INSERT, cliente.bairro)
-        self.txtCidade.insert(INSERT, cliente.cidade)
-        self.txtCep.insert(INSERT, cliente.cep)
-        self.txtEstado.insert(INSERT, cliente.estado)
-        self.txtComplemento.insert(INSERT, cliente.complemento)
-        self.txtNumero.insert(INSERT, cliente.numero)
+        self.txtSenha.insert(INSERT, funcionario.senha)
+        self.txtTelefone.insert(INSERT, funcionario.telefone)
 
-    def atualizarClientePagina(self):
-        cliente = Cliente()
-        endereco = Endereco()
+    def atualizarFuncionarioPagina(self):
+        funcionario = Funcionario()
 
-        cliente.nome = self.txtNome.get()
-        cliente.cpf = self.txtCpf.get()
-        cliente.nascimento = f"{self.txtDia.get()}-{self.txtMes.get()}-{self.txtAno.get()}"
-        cliente.email = self.emailLogado
-        cliente.senha = self.txtSenha.get()
-        cliente.telefone = self.txtTelefone.get()
-        endereco.logradouro = self.txtLogradouro.get()
-        endereco.bairro = self.txtBairro.get()
-        endereco.cidade = self.txtCidade.get()
-        endereco.cep = self.txtCep.get()
-        endereco.estado = self.txtEstado.get()
-        endereco.complemento = self.txtComplemento.get()
-        endereco.numero = self.txtNumero.get()
-        cliente.endereco = endereco
+        funcionario.nome = self.txtNome.get()
+        funcionario.cpf = self.txtCpf.get()
+        funcionario.nascimento = f"{self.txtDia.get()}-{self.txtMes.get()}-{self.txtAno.get()}"
+        funcionario.email = self.emailLogado
+        funcionario.senha = self.txtSenha.get()
+        funcionario.telefone = self.txtTelefone.get()
 
-        self.lblMsg["text"] = cliente.atualizarCliente()
+        self.lblMsg["text"] = funcionario.atualizarFuncionario()
 
         # redireciona para a pagina padrão do cliente
         self.master.destroy()
         self.master = Tk()
         self.master.title("Login Cliente")
         centralizarJanela(self.master, 600, 200)
-        ClienteLogado(self.master, self.emailLogado)
+        FuncionarioLogado(self.master, self.emailLogado)
         self.master.mainloop()
 
 

@@ -31,8 +31,20 @@ class Funcionario():
     #     except:
     #         return "Erro no cadastro do cliente"
 
-    def atualizarDados(self):
-        pass
+    def atualizarFuncionario(self):
+        banco = BancoFuncionarios()
+        try:
+            c = banco.conexao.cursor()
+            
+            query = """update usuarios set nome = ?, cpf = ?, nascimento = ?, email = ?, senha = ?, telefone = ?, admin = ? where email = ?"""
+            c.execute(query, (self.nome, self.cpf, self.nascimento, self.email, self.senha, self.telefone, self.admin, self.email))
+
+            banco.conexao.commit()
+            c.close()
+
+            return "Funcionário atualizado com sucesso"
+        except:
+            return "Erro ao atualizar"
 
     def login(self, email, senha):
         banco = BancoFuncionarios()
@@ -80,3 +92,29 @@ class Funcionario():
             return "Cliente"
         else:
             return "Não é cliente"
+
+    def selecionarFuncionario(self, emailLogado):
+        banco = BancoFuncionarios()
+
+        try:
+            c = banco.conexao.cursor()
+
+            query = """select * from usuarios where email = ?"""
+            c.execute(query, (emailLogado,))
+            dados = c.fetchall()
+
+            for linha in dados:
+                self.idFuncionario = linha[0]
+                self.nome = linha[1]
+                self.cpf = linha[2]
+                self.nascimento = linha[3]
+                self.email = linha[4]
+                self.senha = linha[5]
+                self.telefone = linha[6]
+                self.admin = linha[7]
+            
+            c.close()
+
+            return "Funcionário buscado com sucesso"
+        except:
+            return "Erro ao buscar funcionaio"
