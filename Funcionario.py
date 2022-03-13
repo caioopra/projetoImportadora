@@ -1,4 +1,5 @@
-from BancoFuncionarios import BancoFuncionarios
+from Banco import Banco
+from BancoFuncionarios import BancoFuncionarios, BancoClientesFuncionarios
 
 
 class Funcionario():
@@ -58,7 +59,23 @@ class Funcionario():
             elif not(email == self.email and senha == self.senha):
                 return "Email ou senha funcionario incorretos, tente novamente"
             else:
-                print(dados)
                 return "Login efetuado com sucesso"
         except:
             return "Erro no login do funcionario"
+
+    def verificarCliente(self, email):  # verifica se um dado funcionario é também cliente
+        bancoFuncionariosClientes = BancoClientesFuncionarios()
+
+        c = bancoFuncionariosClientes.conexao.cursor()
+
+        query = """select funcionario from usuarios where funcionario = ?"""
+
+        c.execute(query, (email,))
+        emailC = c.fetchall()
+        c.close()
+
+        print(emailC[0][0] == email)
+        if emailC[0][0] == email:
+            return "Cliente"
+        else:
+            return "Não é cliente"
