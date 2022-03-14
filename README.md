@@ -23,3 +23,5 @@ Os bancos de dados já possuem dados cadastrados para fins de simulação.
 ## Administrador para testes: 
 - login: admin
 - senha: admin
+
+### Link para o projeto: https://github.com/caioopra/projetoImportadora
