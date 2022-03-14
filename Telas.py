@@ -1726,7 +1726,7 @@ class AdminProdutos():
         AdministradorLogado(self.master, self.emailLogado)
 
 
-class AdminConta():  # TODO: implementar
+class AdminConta(): 
     def __init__(self, master=None, emailLogado=""):
         self.master = master
         self.emailLogado = emailLogado
@@ -1918,7 +1918,7 @@ class AdminConta():  # TODO: implementar
         self.master.mainloop()
 
 
-class AdminFuncionarios():  # TODO: implementar
+class AdminFuncionarios():  
     def __init__(self, master=None, emailLogado=""):
         self.master = master
         self.emailLogado = emailLogado
@@ -2049,7 +2049,6 @@ class AdminFuncionarios():  # TODO: implementar
             funcionario = Funcionario(
                 linha[1], linha[2], linha[3], linha[4], linha[5], linha[6])
             listaFuncionarios.append(funcionario)
-            print(funcionario.__dict__)
         c.close()
         return listaFuncionarios
 
@@ -2083,7 +2082,6 @@ class AdminFuncionarios():  # TODO: implementar
                 lista[j].email)
             self.btnDemitir.pack(side=LEFT, padx=5, pady=15)
 
-            print(len(lista))
             listaFuncionariosMostrados.append(self.labelNome)
             listaFuncionariosMostrados.append(self.labelCpf)
             listaFuncionariosMostrados.append(self.labelNascimento)
@@ -2139,10 +2137,8 @@ class AdminFuncionarios():  # TODO: implementar
             c.execute("delete from usuarios where email = '" + email + "'")
             banco.conexao.commit()
             c.close()
-            print("funcionario demitido")
             return "Funcionario demitido"
         except:
-            print("erro ao demitir")
             return "Erro ao demitir"
 
 
@@ -2369,7 +2365,6 @@ class ClienteProdutosDisponiveis():
         for i in range(quantidadeListas):
             self.matrizProdutos[i] = listaProdutos[(4 * i):(4 * i + 4)]
 
-        print(self.matrizProdutos)
         # TODO: criar tratamento para os produtos indisponiveis
 
         self.listaContainers = [self.container3,
