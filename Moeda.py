@@ -4,6 +4,3 @@ class Moeda():
         self.sigla = sigla
         self.nome = nome
         self.horario_atualizacao = horario_atualizacao
-
-    def atualizar_cotacao(self, sigla):
-        pass

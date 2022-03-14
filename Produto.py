@@ -273,12 +273,4 @@ def atualizarPrecos():
 
 
 listaMoedas = listarMoedas()
-# print("Moedas: ", listaMoedas)
 
-# print(atualizarCotacoes()[0])
-
-# celular = Produto("Celular Samsung S22", "799", "USD", "10", "3")
-# camera = Produto("Camera Nikon D5000", "699", "EUR", "8", "2")
-
-# print(camera.comprar())
-# print(camera.adicionar(1))
