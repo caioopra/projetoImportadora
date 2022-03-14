@@ -214,7 +214,6 @@ def atualizarCotacoes():
 
         for i in range(len(listaMoedas)):
             valoresAntigos[listaMoedas[i][2]] = listaMoedas[i][3]
-        # print("Valores antigos: ", valoresAntigos)
 
         listaAtualizada = []
         for tupla in listaMoedas:
@@ -224,7 +223,6 @@ def atualizarCotacoes():
 
             listaAtualizada.append(
                 (tupla[0], tupla[1], codigo, novoValor, atualizacao))
-        # print("Lista atualizada: ", listaAtualizada)
 
         banco = BancoMoedas()
 
@@ -281,8 +279,6 @@ listaMoedas = listarMoedas()
 
 # celular = Produto("Celular Samsung S22", "799", "USD", "10", "3")
 # camera = Produto("Camera Nikon D5000", "699", "EUR", "8", "2")
-# controle = Produto("Controle Dualshock 4", "45", "EUR", "5", "4")
-
 
 # print(camera.comprar())
 # print(camera.adicionar(1))

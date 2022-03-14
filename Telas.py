@@ -5,6 +5,7 @@ from Endereco import Endereco
 from Funcionario import Funcionario
 from ClienteFuncionario import ClienteFuncionario
 from Produto import atualizarCotacoes
+from BancoFuncionarios import BancoFuncionarios
 
 
 class PaginaInicial():
@@ -646,8 +647,6 @@ class FuncionarioProdutos():
         for i in range(quantidadeListas):
             self.matrizProdutos[i] = listaProdutos[(4 * i):(4 * i + 4)]
 
-        # TODO: criar tratamento para os produtos indisponiveis
-
         self.listaContainers = [self.container3,
                                 self.container4, self.container5, self.container6]
         # mostra na tela os produtos daquela linha da matriz
@@ -655,6 +654,7 @@ class FuncionarioProdutos():
         self.objetosMostrados = self.mostrarProdutos(
             self.matrizProdutos[self.paginaAtual])
 
+        # TODO: continuar dauqi
         # botoes de navegacao entre as paginas
         self.btnProxima = Button(
             self.container7, text="Próxima\nPágina", font=fontePadrao, width=16)
@@ -1449,7 +1449,7 @@ class FuncionarioClienteConfigurar():
         self.master.mainloop()
 
 
-class AdministradorLogado(): 
+class AdministradorLogado():
     def __init__(self, master=None, emailLogado=""):
         self.master = master
         self.emailLogado = emailLogado
@@ -1496,7 +1496,7 @@ class AdministradorLogado():
         PaginaInicial(self.master)
         self.master.mainloop()
 
-    def acessarProdutos(self): 
+    def acessarProdutos(self):
         self.master.destroy()
         self.master = Tk()
         self.master.title("Produtos disponíveis")
@@ -1520,7 +1520,7 @@ class AdministradorLogado():
         AdminFuncionarios(self.master, self.emailLogado)
         self.master.mainloop()
 
-# TODO: se der tempo, colocar também para poder remover um produto completamente
+
 class AdminProdutos():
     def __init__(self, master=None, emailLogado=""):
         self.master = master
@@ -1726,7 +1726,7 @@ class AdminProdutos():
         AdministradorLogado(self.master, self.emailLogado)
 
 
-class AdminConta(): # TODO: implementar
+class AdminConta():  # TODO: implementar
     def __init__(self, master=None, emailLogado=""):
         self.master = master
         self.emailLogado = emailLogado
@@ -1851,10 +1851,12 @@ class AdminConta(): # TODO: implementar
         self.txtTelefone.pack(side=LEFT)
 
         # input email de notificacoes
-        self.lblEmailNotificacao = Label(self.container7, text="Email\nnotificacoes: ", font=fontePadrao, width=12)
+        self.lblEmailNotificacao = Label(
+            self.container7, text="Email\nnotificacoes: ", font=fontePadrao, width=12)
         self.lblEmailNotificacao.pack(side=LEFT)
 
-        self.txtEmailNotificacoes = Entry(self.container7, width=25, font=fontePadrao)
+        self.txtEmailNotificacoes = Entry(
+            self.container7, width=25, font=fontePadrao)
         self.txtEmailNotificacoes.pack(side=LEFT)
 
         # botao de atualizacao
@@ -1862,7 +1864,6 @@ class AdminConta(): # TODO: implementar
             self.container8, text="Atualizar", font=fontePadrao, width=12)
         self.btnAtualizar["command"] = self.atualizarAdministradorPagina
         self.btnAtualizar.pack(side=LEFT, padx=81)
-
 
         # mensagem de sucesso/erro
         self.lblMsg = Label(self.container9, text="",
@@ -1892,7 +1893,8 @@ class AdminConta(): # TODO: implementar
         self.txtAno.insert(INSERT, nascimento[2])
         self.txtSenha.insert(INSERT, administrador.senha)
         self.txtTelefone.insert(INSERT, administrador.telefone)
-        self.txtEmailNotificacoes.insert(INSERT, administrador.emailNotificacoes)
+        self.txtEmailNotificacoes.insert(
+            INSERT, administrador.emailNotificacoes)
 
     def atualizarAdministradorPagina(self):
         administrador = Administrador()
@@ -1915,11 +1917,234 @@ class AdminConta(): # TODO: implementar
         AdministradorLogado(self.master, self.emailLogado)
         self.master.mainloop()
 
-class AdminFuncionarios(): # TODO: implementar
+
+class AdminFuncionarios():  # TODO: implementar
     def __init__(self, master=None, emailLogado=""):
         self.master = master
         self.emailLogado = emailLogado
-    
+
+        self.container1 = Frame(master)
+        self.container1["pady"] = 10
+        self.container1.pack()
+
+        self.container2 = Frame(master)
+        self.container2["padx"] = 20
+        self.container2["pady"] = 5
+        self.container2.pack()
+
+        self.container3 = Frame(master)
+        self.container3["padx"] = 20
+        self.container3["pady"] = 5
+        self.container3.pack()
+
+        self.container4 = Frame(master)
+        self.container4["padx"] = 20
+        self.container4["pady"] = 5
+        self.container4.pack()
+
+        self.container5 = Frame(master)
+        self.container5["padx"] = 20
+        self.container5["pady"] = 5
+        self.container5.pack()
+
+        self.container6 = Frame(master)
+        self.container6["padx"] = 20
+        self.container6["pady"] = 5
+        self.container6.pack()
+
+        self.container7 = Frame(master)
+        self.container7["padx"] = 20
+        self.container7["pady"] = 5
+        self.container7.pack()
+
+        self.container8 = Frame(master)
+        self.container8["padx"] = 20
+        self.container8["pady"] = 5
+        self.container8.pack()
+
+        # conteudo
+        self.titulo = Label(self.container1, text="Produtos", font=(
+            "Century Gothic", "14", "bold"), width=65)
+        self.titulo.pack(side=LEFT, padx=30)
+
+        self.btnVoltar = Button(
+            self.container1, text="Voltar", font=fontePadrao, width=15)
+        self.btnVoltar["command"] = self.voltarPagina
+        self.btnVoltar.pack(side=LEFT)
+
+        # labels
+        self.lblNome = Label(self.container2, text="Nome", font=(
+            "Century Gothic", "12", "bold"), width=20)
+        self.lblNome.pack(side=LEFT, padx=5, pady=25)
+
+        self.lblCpf = Label(self.container2, text="CPF", font=(
+            "Century Gothic", "12", "bold"), width=20)
+        self.lblCpf.pack(side=LEFT, padx=5, pady=10)
+
+        self.lblNascimento = Label(self.container2, text="Nascimento", font=(
+            "Century Gothic", "12", "bold"), width=20)
+        self.lblNascimento.pack(side=LEFT, padx=5, pady=15)
+
+        self.lblEmail = Label(self.container2, text="Email", font=(
+            "Century Gothic", "12", "bold"), width=20)
+        self.lblEmail.pack(side=LEFT, padx=5, pady=15)
+
+        self.lblTelefone = Label(self.container2, text="Telefone ",
+                                 font=("Century Gothic", "12", "bold"), width=20)
+        self.lblTelefone.pack(side=LEFT, padx=5, pady=15)
+
+        listaFuncionarios = self.listarFuncionarios()
+
+        if len(listaFuncionarios) % 4 == 0:
+            quantidadeListas = len(listaFuncionarios) / 4
+        else:
+            quantidadeListas = (len(listaFuncionarios) // 4) + 1
+
+        # matriz com listas de até 4 funcionários por linha
+        self.matrizFuncionarios = [0] * quantidadeListas
+        for i in range(quantidadeListas):
+            self.matrizFuncionarios[i] = listaFuncionarios[(4 * i):(4 * i + 4)]
+
+        self.listaContainers = [self.container3,
+                                self.container4, self.container5, self.container6]
+
+        # mostra os funcionarios daquela linha da matriz na tela
+        self.paginaAtual = 0
+        self.objetosMostrados = self.mostrarFuncionarios(
+            self.matrizFuncionarios[self.paginaAtual])
+
+        # navegacao da pagina
+        self.btnProxima = Button(
+            self.container7, text="Próxima\nPágina", font=fontePadrao, width=16)
+        self.btnProxima["command"] = lambda: self.paginaSeguinte(
+            self.matrizFuncionarios[self.paginaAtual + 1], self.objetosMostrados)
+        self.btnProxima.pack(side=RIGHT, padx=15)
+
+        self.btnAnterior = Button(
+            self.container7, text="Página\nAnterior", font=fontePadrao, width=16)
+        self.btnAnterior["command"] = lambda: self.paginaAnterior(
+            self.matrizFuncionarios[self.paginaAtual - 1], self.objetosMostrados)
+
+        if self.paginaAtual == 0:
+            self.btnAnterior["state"] = DISABLED
+        else:
+            self.btnAnterior["state"] = NORMAL
+        self.btnAnterior.pack(side=RIGHT, padx=15)
+
+    def voltarPagina(self):
+        self.master.destroy()
+        self.master = Tk()
+        self.master.title("Administrador")
+        centralizarJanela(self.master, 700, 200)
+        AdministradorLogado(self.master, self.emailLogado)
+
+    def listarFuncionarios(self):  # retorna lista contendo os funcionários
+        banco = BancoFuncionarios()
+        c = banco.conexao.cursor()
+        c.execute("select *  from usuarios")
+        dados = c.fetchall()
+
+        listaFuncionarios = []
+        for linha in dados:
+            funcionario = Funcionario(
+                linha[1], linha[2], linha[3], linha[4], linha[5], linha[6])
+            listaFuncionarios.append(funcionario)
+            print(funcionario.__dict__)
+        c.close()
+        return listaFuncionarios
+
+    def mostrarFuncionarios(self, lista):
+        listaFuncionariosMostrados = []
+
+        for j in range(len(lista)):  # coloca os elementos da mesma lista na tela (max = 4)
+            self.labelNome = Label(
+                self.listaContainers[j], text=lista[j].nome, font=fontePadrao, width=20)
+            self.labelNome.pack(side=LEFT, pady=15)
+
+            self.labelCpf = Label(
+                self.listaContainers[j], text=lista[j].cpf, font=fontePadrao, width=20)
+            self.labelCpf.pack(side=LEFT, padx=5, pady=10)
+
+            self.labelNascimento = Label(
+                self.listaContainers[j], text=lista[j].nascimento, font=fontePadrao, width=25)
+            self.labelNascimento.pack(side=LEFT, padx=5, pady=15)
+
+            self.labelEmail = Label(
+                self.listaContainers[j], text=lista[j].email, font=fontePadrao, width=25)
+            self.labelEmail.pack(side=LEFT, padx=5, pady=15)
+
+            self.labelTelefone = Label(
+                self.listaContainers[j], text=lista[j].telefone, font=fontePadrao, width=25)
+            self.labelTelefone.pack(side=LEFT, padx=5, pady=15)
+
+            self.btnDemitir = Button(
+                self.listaContainers[j], text="Demitir", font=fontePadrao, width=25)
+            self.btnDemitir["command"] = lambda: self.demitirFuncionario(
+                lista[j].email)
+            self.btnDemitir.pack(side=LEFT, padx=5, pady=15)
+
+            print(len(lista))
+            listaFuncionariosMostrados.append(self.labelNome)
+            listaFuncionariosMostrados.append(self.labelCpf)
+            listaFuncionariosMostrados.append(self.labelNascimento)
+            listaFuncionariosMostrados.append(self.labelEmail)
+            listaFuncionariosMostrados.append(self.labelTelefone)
+
+        self.objetosMostrados = listaFuncionariosMostrados.copy()
+        return listaFuncionariosMostrados
+
+    def removerDaTela(self, lista):
+        for objeto in lista:
+            lista.remove(objeto)
+            objeto.destroy()
+
+    def paginaSeguinte(self, listaFunc, listaRemover):
+        self.removerDaTela(listaRemover)
+
+        if not (self.paginaAtual + 1 > len(self.matrizFuncionarios) - 1):
+            self.paginaAtual += 1
+            self.mostrarFuncionarios(listaFunc)
+
+        if self.paginaAtual == (len(self.matrizFuncionarios) - 1):
+            self.btnProxima["state"] = DISABLED
+        else:
+            self.btnProxima["state"] = NORMAL
+
+        if self.paginaAtual == 0:
+            self.btnAnterior["state"] = DISABLED
+        else:
+            self.btnAnterior["state"] = NORMAL
+
+    def paginaAnterior(self, listaFunc, listaRemover):
+        self.removerDaTela(listaRemover)
+
+        if self.paginaAtual - 1 >= 0:
+            self.paginaAtual -= 1
+            self.mostrarFuncionarios(listaFunc)
+
+        if self.paginaAtual == 0:
+            self.btnAnterior["state"] = DISABLED
+        else:
+            self.btnAnterior["state"] = NORMAL
+
+        if self.paginaAtual == (len(self.matrizFuncionarios) - 1):
+            self.btnProxima["state"] = DISABLED
+        else:
+            self.btnProxima["state"] = NORMAL
+
+    def demitirFuncionario(self, email):
+        banco = BancoFuncionarios()
+        try:
+            c = banco.conexao.cursor()
+            c.execute("delete from usuarios where email = '" + email + "'")
+            banco.conexao.commit()
+            c.close()
+            print("funcionario demitido")
+            return "Funcionario demitido"
+        except:
+            print("erro ao demitir")
+            return "Erro ao demitir"
+
 
 class LoginCliente():
     def __init__(self, master=None):

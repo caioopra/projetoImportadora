@@ -47,20 +47,6 @@ class Cliente():
         # except:
         #     return "Erro ao atualizar cliente"
 
-    def deletarCliente(self):
-        banco = Banco()
-        try:
-            c = banco.conexao.cursor()
-            c.execute("delete from usuarios where idCliente = " +
-                      str(self.idCliente) + " ")
-
-            banco.conexao.commit()
-            c.close()
-
-            return "Cliente excluído com sucesso"
-        except:
-            return "Ocorreu um erro na exclusão do cliente"
-
     def login(self, email, senha):
         banco = Banco()
         try:

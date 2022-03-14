@@ -8,5 +8,3 @@ class Endereco():
         self.complemento = complemento
         self.numero = numero
 
-    def atualizarEndereco(self):
-        pass

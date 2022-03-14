@@ -14,22 +14,21 @@ class Funcionario():
         self.telefone = telefone
         self.idFuncionario = idFuncionario
 
-    # TODO: usar essa função dentro do admin para cadastrar um funcionario
-    # def cadastrarFuncionario(self):
-    #     banco = BancoFuncionarios()
+    def cadastrarFuncionario(self):
+        banco = BancoFuncionarios()
 
-    #     try:
-    #         c = banco.conexao.cursor()
+        try:
+            c = banco.conexao.cursor()
 
-    #         c.execute("insert into usuarios (nome, cpf, nascimento, email, senha, telefone, admin) values ('" +
-    #                   self.nome + "', '" + self.cpf + "', '" + self.nascimento + "', '" + self.email + "', '" + self.senha + "', '" + self.telefone + "', '" + str(self.admin) + "' )")
+            c.execute("insert into usuarios (nome, cpf, nascimento, email, senha, telefone, admin) values ('" +
+                      self.nome + "', '" + self.cpf + "', '" + self.nascimento + "', '" + self.email + "', '" + self.senha + "', '" + self.telefone + "', '" + str(self.admin) + "' )")
 
-    #         banco.conexao.commit()
-    #         c.close()
+            banco.conexao.commit()
+            c.close()
 
-    #         return "Cliente cadastrado com sucesso!"
-    #     except:
-    #         return "Erro no cadastro do cliente"
+            return "Cliente cadastrado com sucesso!"
+        except:
+            return "Erro no cadastro do cliente"
 
     def atualizarFuncionario(self):
         banco = BancoFuncionarios()
