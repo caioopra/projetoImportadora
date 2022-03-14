@@ -11,7 +11,19 @@ class ClienteFuncionario():
             logradouro, bairro, cidade, cep, estado, complemento, numero)
 
     def atualizarDados(self):
-        pass
+        banco = BancoClientesFuncionarios()
+        try:
+            c = banco.conexao.cursor()
+
+            query = """update usuarios set funcionario = ?, desconto = ?, logradouro = ?, bairro = ?, cidade = ?, cep = ?, estado = ?, complemento = ?, numero = ? where funcionario = ?"""
+            c.execute(query, (self.funcionario, self.desconto, self.endereco.logradouro, self.endereco.bairro, self.endereco.cidade, self.endereco.cep, self.endereco.estado, self.endereco.complemento, self.endereco.numero, self.funcionario,))
+
+            banco.conexao.commit()
+            c.close()
+
+            return "Funcionário atualizado"
+        except:
+            return "Erro ao atualizar funcionário"
 
     def cadastrarFuncionario(self):
         banco = BancoClientesFuncionarios()
@@ -55,5 +67,6 @@ class ClienteFuncionario():
             return "Desconto encontrado"
         except:
             return "Erro ao buscar desconto"
+
 
 
