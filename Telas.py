@@ -1,3 +1,6 @@
+# https://github.com/caioopra/projetoImportadora
+# Caio Prá Silva - POO1, UFSC
+
 from tkinter import *
 from Administrador import Administrador
 from Cliente import Cliente
